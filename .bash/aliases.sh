@@ -5,6 +5,7 @@ alias sg="./script/generate"
 alias ff="open -a firefox"
 alias pshop="open -a 'Adobe Photoshop CS4'"
 alias spec="spec -c --format nested"
+alias rspec="rspec -c --format nested"
 alias lop='sudo lsof -i -P | grep -i "listen"'
 alias svnx="open -a svnx"
 alias mci="mvn clean install"
