@@ -8,6 +8,7 @@
   co = checkout
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   pom = push origin master
+  hudson = push origin HEAD:mikelikesbikes/test -f
 [color]
   branch = auto
   diff = auto
