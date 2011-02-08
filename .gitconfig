@@ -41,4 +41,4 @@
   remote = origin
   merge = refs/heads/master
 [branch]
-  autosetuprebase = always
+  # autosetuprebase = always
