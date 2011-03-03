@@ -46,3 +46,4 @@ alias enginx="mate /opt/nginx/conf/nginx.conf"
 alias snginx="sudo nginx"
 alias rnginx="sudo nginx -s reload"
 alias knginx="sudo nginx -s stop"
+alias uat-rev='ssh groupon_uat "cd current && cat REVISION"'
