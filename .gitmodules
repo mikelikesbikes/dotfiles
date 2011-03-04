@@ -1,6 +1,6 @@
 [submodule "Vimlander-2-The-Quickening"]
   path = .vim/Vimlander-2-The-Quickening
-  url = https://github.com/spicycode/Vimlander-2-The-Quickening.git
+  url = git@github.com:mikelikesbikes/Vimlander-2-The-Quickening.git 
 [submodule "rake_cap_bash_autocomplete"]
   path = .bash/completion/rake_cap_bash_autocomplete
   url = https://github.com/sgruhier/rake_cap_bash_autocomplete.git
