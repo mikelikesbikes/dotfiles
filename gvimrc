@@ -4,9 +4,9 @@
 " set the X11 font to use
 " set guifont=-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-1
 if has("gui_mac") || has("gui_macvim")
-  set guifont=Monaco:h12
+  set guifont=Monaco:h15
 elseif has("gui_gtk")
-  set guifont=Andale\ Mono\ 11
+  set guifont=Andale\ Mono\ 13
 end
 
 if has("gui_macvim")
