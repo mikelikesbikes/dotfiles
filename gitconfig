@@ -6,8 +6,11 @@
   ci = commit
   br = branch
   co = checkout
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  # lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   pom = push origin master
+  lg = log -p
+  lol = log --graph --decorate --oneline
+  lola = log --graph --decorate --oneline --all
   hudson = push origin HEAD:mikelikesbikes/test -f
   gp = grep -C 2
 
