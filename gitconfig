@@ -37,7 +37,6 @@
   untracked = cyan
 [core]
   excludesfile = /Users/mike/.gitignore
-  editor = vim
   autocrlf = input
 [push]
   default = matching
