@@ -95,6 +95,8 @@ cmap %/ <C-r>=expand('%:p:h')<CR>/
 " execute current line as shell command, and open output in new window
 map <Leader>x :silent . w ! sh > ~/.vim_cmd.out<CR>:new ~/.vim_cmd.out<CR>
 
+noremap <C-t> :CommandT<CR>
+
 " Character mapping
 cnoremap <C-a> <Home>
 cnoremap <C-f> <Right>
