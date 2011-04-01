@@ -47,4 +47,4 @@ alias snginx="sudo nginx"
 alias rnginx="sudo nginx -s reload"
 alias knginx="sudo nginx -s stop"
 alias uat-rev='ssh groupon_uat "cat current/REVISION"'
-alias migrate='rake db:migrate && rake db:test:prepare && rake spec:fixture_builder:rebuild'
+alias migrate='echo "Migrating DB" && rake db:migrate && echo "Preparing test DB" && rake db:test:prepare && echo "Rebuilding Test Fixtures" && rake spec:fixture_builder:rebuild'
