@@ -12,6 +12,8 @@
   lol = log --graph --decorate --oneline
   lola = log --graph --decorate --oneline --all
   hudson = push origin HEAD:mikelikesbikes/test -f
+  rebase-hudson = push origin HEAD:rebase/master/mikelikesbikes -f
+  merge-hudson = push origin HEAD:merge/master/mikelikesbikes -f
   gp = grep -C 2
 
   # "aliases" to get autocomplete to work for pivotal_git_scripts
