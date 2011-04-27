@@ -185,8 +185,11 @@ let g:netrw_altv=1
 " Colors *********************************************************************
 if has("gui_running")
   " sweet color scheme using true color
-  colorscheme sunburst
-  "colorscheme moria
+  syntax enable
+  " set background=dark
+  set background=light
+  colorscheme solarized
+  " colorscheme sunburst
 else
   set bg=dark
 end

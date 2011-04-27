@@ -4,7 +4,7 @@
 "           (see this url for latest release & screenshots)
 " License:  OSI approved MIT license (see end of this file)
 " Created:  In the middle of the night
-" Modified: 2011 Apr 07
+" Modified: 2011 Apr 14
 "
 " Usage "{{{
 "
@@ -133,6 +133,7 @@
 " g:solarized_underline =   1       |   0
 " g:solarized_italic    =   1       |   0
 " g:solarized_contrast  =   "normal"|   "high" or "low"
+" g:solarized_visibility=   "normal"|   "high" or "low"
 " ------------------------------------------------
 "
 " OPTION DETAILS
@@ -193,6 +194,13 @@
 " Stick with normal! It's been carefully tested. Setting this option to high
 " or low does use the same Solarized palette but simply shifts some values up
 " or down in order to expand or compress the tonal range displayed.
+"
+" ------------------------------------------------
+" g:solarized_visibility =  "normal"|   "high" or "low"
+" ------------------------------------------------
+" Special characters such as trailing whitespace, tabs, newlines, when 
+" displayed using ":set list" can be set to one of three levels depending on 
+" your needs.
 "
 " ---------------------------------------------------------------------
 " COLOR VALUES
@@ -264,6 +272,9 @@ if !exists("g:solarized_termcolors")
 endif
 if !exists("g:solarized_contrast")
     let g:solarized_contrast = "normal"
+endif
+if !exists("g:solarized_visibility")
+    let g:solarized_visibility = "normal"
 endif
 "}}}
 " Colorscheme initialization "{{{
@@ -393,7 +404,7 @@ endif
 "}}}
 " Background value based on termtrans setting "{{{
 " ---------------------------------------------------------------------
-if g:solarized_termtrans == 0
+if (has("gui_running") || g:solarized_termtrans == 0)
     let s:back        = s:base03
 else
     let s:back        = "NONE"
@@ -613,26 +624,42 @@ exe "hi! Todo"           .s:fmt_bold   .s:fg_magenta.s:bg_none
 "       *Todo            anything that needs extra attention; mostly the
 "                        keywords TODO FIXME and XXX
 "
-"Highlighting groups for various occasions
-"-----------------------------------------
-exe "hi! SpecialKey"     .s:fmt_none   .s:fg_base02 .s:bg_none
-exe "hi! NonText"        .s:fmt_bold   .s:fg_base02 .s:bg_none
+"}}}
+" Extended highlighting "{{{
+" ---------------------------------------------------------------------
+if      (g:solarized_visibility=="high")
+    exe "hi! SpecialKey"     .s:fmt_revr   .s:fg_red    .s:bg_none
+    exe "hi! NonText"        .s:fmt_bold   .s:fg_base1  .s:bg_none
+elseif  (g:solarized_visibility=="low")
+    exe "hi! SpecialKey"     .s:fmt_bold   .s:fg_base02 .s:bg_none
+    exe "hi! NonText"        .s:fmt_bold   .s:fg_base02 .s:bg_none
+else
+    exe "hi! SpecialKey"     .s:fmt_bold   .s:fg_red    .s:bg_none
+    exe "hi! NonText"        .s:fmt_bold   .s:fg_base01 .s:bg_none
+endif
+if (has("gui_running")) || &t_Co > 8
+    exe "hi! StatusLine"     .s:fmt_none   .s:fg_base02 .s:bg_base1
+    exe "hi! StatusLineNC"   .s:fmt_none   .s:fg_base02 .s:bg_base00
+    "exe "hi! Visual"         .s:fmt_stnd   .s:fg_none   .s:bg_base02
+    exe "hi! Visual"         .s:fmt_none   .s:fg_base03 .s:bg_base01
+else
+    exe "hi! StatusLine"     .s:fmt_none   .s:fg_base02 .s:bg_base2
+    exe "hi! StatusLineNC"   .s:fmt_none   .s:fg_base02 .s:bg_base2
+    exe "hi! Visual"         .s:fmt_none   .s:fg_none   .s:bg_base2
+endif
 exe "hi! Directory"      .s:fmt_none   .s:fg_blue   .s:bg_none
 exe "hi! ErrorMsg"       .s:fmt_revr   .s:fg_red    .s:bg_none
-exe "hi! IncSearch"      .s:fmt_revr   .s:fg_yellow .s:bg_none
-exe "hi! Search"         .s:fmt_stnd   .s:fg_yellow .s:bg_none
+exe "hi! IncSearch"      .s:fmt_stnd   .s:fg_orange .s:bg_none
+exe "hi! Search"         .s:fmt_revr   .s:fg_yellow .s:bg_none
 exe "hi! MoreMsg"        .s:fmt_none   .s:fg_blue   .s:bg_none
 exe "hi! ModeMsg"        .s:fmt_none   .s:fg_blue   .s:bg_none
 exe "hi! LineNr"         .s:fmt_none   .s:fg_base01 .s:bg_base02
 exe "hi! Question"       .s:fmt_bold   .s:fg_cyan   .s:bg_none
-exe "hi! StatusLine"     .s:fmt_none   .s:fg_base02 .s:bg_base1
-exe "hi! StatusLineNC"   .s:fmt_none   .s:fg_base02 .s:bg_base00
 exe "hi! VertSplit"      .s:fmt_bold   .s:fg_base00 .s:bg_base00
 exe "hi! Title"          .s:fmt_bold   .s:fg_orange .s:bg_none
-exe "hi! Visual"         .s:fmt_stnd   .s:fg_none   .s:bg_base02
 exe "hi! VisualNOS"      .s:fmt_stnd   .s:fg_none   .s:bg_base02
 exe "hi! WarningMsg"     .s:fmt_bold   .s:fg_red    .s:bg_none
-exe "hi! WildMenu"       .s:fmt_none   .s:fg_base1  .s:bg_base02
+exe "hi! WildMenu"       .s:fmt_none   .s:fg_base2  .s:bg_base02
 exe "hi! Folded"         .s:fmt_undb   .s:fg_base0  .s:bg_base02  .s:sp_base03
 exe "hi! FoldColumn"     .s:fmt_bold   .s:fg_base0  .s:bg_base02
 exe "hi! DiffAdd"        .s:fmt_revr   .s:fg_green  .s:bg_none
@@ -655,13 +682,10 @@ exe "hi! TabLineFill"    .s:fmt_undr   .s:fg_base0  .s:bg_base02  .s:sp_base0
 exe "hi! CursorColumn"   .s:fmt_none   .s:fg_none   .s:bg_base02
 exe "hi! CursorLine"     .s:fmt_uopt   .s:fg_none   .s:bg_base02  .s:sp_base1
 exe "hi! ColorColumn"    .s:fmt_none   .s:fg_none   .s:bg_base02
-exe "hi! Cursor"         .s:fmt_revr   .s:fg_none   .s:bg_none
-exe "hi! lCursor"        .s:fmt_stnd   .s:fg_none   .s:bg_none
+exe "hi! Cursor"         .s:fmt_none   .s:fg_base03 .s:bg_base0
+hi! link lCursor Cursor
 exe "hi! MatchParen"     .s:fmt_bold   .s:fg_red    .s:bg_base01
 
-"}}}
-" Extended highlighting "{{{
-" ---------------------------------------------------------------------
 "}}}
 " vim syntax highlighting "{{{
 " ---------------------------------------------------------------------
@@ -899,6 +923,25 @@ exe "hi! pandocMetadata"                 .s:fg_blue   .s:bg_none   .s:fmt_bold
 hi! link pandocMetadataTitle             pandocMetadata
 
 "}}}
+" Utility autocommand "{{{
+" ---------------------------------------------------------------------
+" In cases where Solarized is initialized inside a terminal vim session and 
+" then transferred to a gui session via the command `:gui`, the gui vim process 
+" does not re-read the colorscheme (or .vimrc for that matter) so any `has_gui` 
+" related code that sets gui specific values isn't executed.
+"
+" Currently, Solarized sets only the cterm or gui values for the colorscheme 
+" depending on gui or terminal mode. It's possible that, if the following 
+" autocommand method is deemed excessively poor form, that approach will be 
+" used again and the autocommand below will be dropped.
+"
+" However it seems relatively benign in this case to include the autocommand 
+" here. It fires only in cases where vim is transferring from terminal to gui 
+" mode (detected with the script scope s:vmode variable). It also allows for 
+" other potential terminal customizations that might make gui mode suboptimal.
+"
+autocmd GUIEnter * if (s:vmode != "gui") | exe "colorscheme " . g:colors_name | endif
+"}}}
 " License "{{{
 " ---------------------------------------------------------------------
 "
@@ -922,4 +965,5 @@ hi! link pandocMetadataTitle             pandocMetadata
 " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 " THE SOFTWARE.
 "
+" vim:foldmethod=marker:foldlevel=0
 "}}}
