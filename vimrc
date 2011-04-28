@@ -153,6 +153,8 @@ exec hiExtraWhiteSpace
 au ColorScheme * exec hiExtraWhiteSpace
 au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 au BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
+set list
+set listchars=tab:▸\ ,eol:¬
 
 " Markdown *******************************************************************
 function! PreviewMKD()
