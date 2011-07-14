@@ -20,4 +20,4 @@ scm_ps1() {
 #   }
 # }
 
-export PS1="$NO_COLOR\u:\W$GREEN\$(scm_ps1)$NO_COLOR > "
+export PS1="$NO_COLOR\u:\W$GREEN\$(scm_ps1)$NO_COLOR $ "

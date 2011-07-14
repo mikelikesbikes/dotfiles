@@ -74,6 +74,9 @@ if has("autocmd")
     \   exe "normal g`\"" |
     \ endif
 
+  " Save on focus lost
+  :au FocusLost * :wa
+
   augroup END
 
 else
