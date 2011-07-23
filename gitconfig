@@ -44,10 +44,16 @@
 [core]
   excludesfile = /Users/mike/.gitignore
   autocrlf = input
+  safecrlf = true
 [push]
   default = matching
 [branch "master"]
   remote = origin
   merge = refs/heads/master
+[merge]
+  tool = p4merge
 [mergetool]
   keepBackup = false
+[mergetool "p4merge"]
+  cmd = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+  trustExitCode = false
