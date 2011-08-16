@@ -107,6 +107,10 @@ cnoremap <C-b> <Left>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
 
+" Command-T plugin tweaks
+" *****************************************************************************
+let g:CommandTMaxFiles=80085
+
 " Sessions ********************************************************************
 set sessionoptions=blank,buffers,curdir,folds,help,options,resize,tabpages,winpos,winsize,globals
 
