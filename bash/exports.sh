@@ -10,6 +10,7 @@ export MAVEN_PATHS="$M2:/usr/share/maven/bin"
 export PATH="$HOME/bin:$HOMEBREW_PATHS:/opt/local/bin:/opt/local/sbin:/opt/nginx/sbin/:$MAVEN_PATHS:$JAVA_HOME/bin:/opt/subversion/bin:$PATH"
 export CDPATH=.
 export LSCOLORS=gxfxcxdxbxegedabagacad
+export DOTFILES=~/dotfiles
 
 #Ruby Enterprise Edition
 export RUBY_HEAP_MIN_SLOTS=1000000
@@ -17,4 +18,3 @@ export RUBY_HEAP_SLOTS_INCREMENT=1000000
 export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 export RUBY_GC_MALLOC_LIMIT=1000000000
 export RUBY_HEAP_FREE_MIN=500000
-export DOTFILES=~/dotfiles
