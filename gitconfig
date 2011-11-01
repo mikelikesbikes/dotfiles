@@ -3,6 +3,7 @@
   email = busch.michael@gmail.com
 [alias]
   st = status -sb
+  # st = status -sp
   ci = commit
   br = branch
   co = checkout
