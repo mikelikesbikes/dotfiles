@@ -3,7 +3,6 @@
   email = busch.michael@gmail.com
 [alias]
   st = status -sb
-  # st = status -sp
   ci = commit
   br = branch
   co = checkout
@@ -16,7 +15,7 @@
   hudson = push origin HEAD:mikelikesbikes/test -f
   rebase-hudson = !cgbranch=$(git symbolic-ref HEAD | sed -n 's:refs/heads/:_:p') && cgsha=$(git log --format="%h" | head -1) && git push origin HEAD:rebase/master/mbusch/${cgsha}${cgbranch}
   merge-hudson = !cgbranch=$(git symbolic-ref HEAD | sed -n 's:refs/heads/:_:p') && cgsha=$(git log --format="%h" | head -1) && git push origin HEAD:merge/master/mbusch/${cgsha}${cgbranch}
-  test-hudson = !cgbranch=$(git symbolic-ref HEAD | sed -n 's:refs/heads/:_:p') && cgsha=$(git log --format="%h" | head -1) && git push origin HEAD:mbusch/${cgsha}${cgbranch}
+  test-hudson = !cgbranch=$(git symbolic-ref HEAD | sed -n 's:refs/heads/:_:p') && cgsha=$(git log --format="%h" | head -1) && git push origin HEAD:test/mbusch/${cgsha}${cgbranch}
   remote-mine = !git remote prune origin && echo "-------------------------------" && git branch -a | grep remotes | grep mbusch
   gp = grep -C 2
   check-uat = !rev=$(uat-rev) && git log HEAD..${rev}
