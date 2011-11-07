@@ -75,7 +75,7 @@ if has("autocmd")
     \ endif
 
   " Save on focus lost
-  :au FocusLost * :wa
+  ":au FocusLost * :wa
 
   augroup END
 
