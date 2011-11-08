@@ -208,7 +208,7 @@ Object.extend(Campfire.Message.prototype, {
       if (author.visible()) {
         author.hide();
         if (this.bodyCell.select('strong').length === 0) {
-          this.bodyCell.insert({top: '<strong style="color:#333;display:block;margin-bottom:8px;">'+author.textContent+'</strong>'});
+          this.bodyCell.insert({top: '<strong style="color:#333;display:block;margin-bottom:8px;">'+author.textContent + ' <small>&lt;' + author.getAttribute('data-email') +'&gt;</small></strong>'});
           avatar = 'http://www.gravatar.com/avatar/' + MD5(author.getAttribute('data-email')) + '?s=32&d=mm';
           author.insert({after: '<img alt="'+this.author()+'" width="32" height="32" align="top" style="opacity: 1.0; margin-left: 5px; border-radius:3px" src="'+avatar+'">'});
         }
