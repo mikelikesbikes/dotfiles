@@ -48,3 +48,4 @@ alias rnginx="sudo nginx -s reload"
 alias knginx="sudo nginx -s stop"
 alias uat-rev='ssh groupon_uat "cat current/REVISION"'
 alias migrate="rake db:migrate:local"
+alias shit="git"
