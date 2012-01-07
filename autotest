@@ -1,5 +1,12 @@
-require 'autotest/growl'
+require "autotest/bundler"
 
-Autotest.add_hook :initialize do |at|
-  at.add_exception(/.git.*/)
+Autotest.add_hook :initialize do |autotest|
+  %w{.git .svn .hg .DS_Store ._* vendor tmp log doc}.each do |exception|
+    autotest.add_exception(exception)
+  end
+  autotest.add_mapping(%r{^lib/.*\.rb$}) {|f, _|
+    Dir['spec/**/*.rb']
+  }
+  nil
 end
+
