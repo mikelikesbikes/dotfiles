@@ -8,7 +8,7 @@ scm_ps1() {
         s=\ \(svn:$(svn info | sed -n -e '/^Revision: \([0-9]*\).*$/s//\1/p' )\)
     else
         GIT_PS1_SHOWDIRTYSTATE=true
-        s=$(__git_ps1)
+        s=$(__git_ps1 " (git:%s) ")
     fi
     echo -n "$s"
 }
