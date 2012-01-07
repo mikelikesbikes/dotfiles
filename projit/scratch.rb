@@ -23,11 +23,5 @@ source :rubygems
 gem 'rspec'
 TXT
   end
-
-  # run('bundle install')
-
-  # run("rvm use 1.9.2@#{project} --create && bundle install")
 end
-
-system("cd #{project} && bundle install")
 
