@@ -12,13 +12,13 @@
   lg = log -p
   lol = log --graph --decorate --oneline
   lola = log --graph --decorate --oneline --all
-  hudson = push origin HEAD:mikelikesbikes/test -f
-  rebase-hudson = !cgbranch=$(git symbolic-ref HEAD | sed -n 's:refs/heads/:_:p') && cgsha=$(git log --format="%h" | head -1) && git push origin HEAD:rebase/master/mbusch/${cgsha}${cgbranch}
-  merge-hudson = !cgbranch=$(git symbolic-ref HEAD | sed -n 's:refs/heads/:_:p') && cgsha=$(git log --format="%h" | head -1) && git push origin HEAD:merge/master/mbusch/${cgsha}${cgbranch}
-  test-hudson = !cgbranch=$(git symbolic-ref HEAD | sed -n 's:refs/heads/:_:p') && cgsha=$(git log --format="%h" | head -1) && git push origin HEAD:test/mbusch/${cgsha}${cgbranch}
+  rebase-hudson = !cgbranch=$(git symbolic-ref HEAD | sed -n 's:refs/heads/:_:p') && cgsha=$(git hsha) && git push origin HEAD:rebase/master/mbusch/${cgsha}${cgbranch}
+  merge-hudson = !cgbranch=$(git symbolic-ref HEAD | sed -n 's:refs/heads/:_:p') && cgsha=$(git hsha) && git push origin HEAD:merge/master/mbusch/${cgsha}${cgbranch}
+  test-hudson = !cgbranch=$(git symbolic-ref HEAD | sed -n 's:refs/heads/:_:p') && cgsha=$(git hsha) && git push origin HEAD:test/mbusch/${cgsha}${cgbranch}
   remote-mine = !git remote prune origin && echo "-------------------------------" && git branch -a | grep remotes | grep mbusch
   gp = grep -C 2
   check-uat = !rev=$(uat-rev) && git log HEAD..${rev}
+  hsha = !cat .git/HEAD | cut -c1-7
 
   # "aliases" to get autocomplete to work for pivotal_git_scripts
   about = about
