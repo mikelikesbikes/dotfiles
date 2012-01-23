@@ -258,3 +258,70 @@ Campfire.AvatarMangler = Class.create({
 /* Here is how to install your responder into the running chat */
 Campfire.Responders.push("AvatarMangler");
 window.chat.installPropaneResponder("AvatarMangler", "avatarmangler");
+
+/* MrCrankyPants - block users and images from Propane!
+* to use, place it in ~/Library/Application Support/Propane/unsupported/caveatPatchor.js (yes, it must be that file name)
+*
+* Created by ripping code off of https://gist.github.com/825404 and https://gist.github.com/310162
+*/
+
+Campfire.MrCrankyPants = Class.create({
+  options: {
+    blockedUsers: ['Abe L.', 'George W.'],
+    usersAllowedToPostImages: ['Ian O.'],
+    replacements: ['quack!', 'moo!', 'bark!']
+  },
+
+  initialize: function(chat) {
+    this.chat = chat;
+    var messages = this.chat.transcript.messages;
+
+    for (var i = 0; i < messages.length; i++) {
+      this.scrubMessage(messages[i]);
+    }
+  },
+
+  scrubMessage: function(message) {
+    this.unloadImages(message);
+    this.blockUsers(message);
+  },
+
+  blockUsers: function(message) {
+    if(!this.options.blockedUsers.include(message.author())) return;
+
+    message.bodyElement().innerHTML = '[USER BLOCKED] '+ this.randomMessage();
+  },
+
+  randomMessage: function(message) {
+    var min = 0;
+    var max = this.options.replacements.length;
+    var index = Math.floor(Math.random() * max);
+    return this.options.replacements[index];
+  },
+
+  unloadImages: function(message){
+    if(this.options.usersAllowedToPostImages.include(message.author())) return;
+
+    var images = message.bodyElement().select('img');
+    images.each( function (img) {
+      if(!img.hasClassName('file_icon')) {
+        img.replace('[IMAGE BLOCKED] ' + img.src);
+      }
+    });
+
+    var links = message.bodyElement().select('a');
+    links.each( function (a) {
+      a.classNames().each ( function(name) {a.removeClassName(name)});
+    });
+  },
+
+  onMessagesInsertedBeforeDisplay: function(messages) {
+    for (var i = 0; i < messages.length; i++) {
+      this.scrubMessage(messages[i]);
+    }
+  }
+
+});
+
+// Campfire.Responders.push("MrCrankyPants");
+// window.chat.installPropaneResponder("MrCrankyPants", "mrcrankypants");
