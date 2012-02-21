@@ -136,7 +136,7 @@ if has("gui_running")
   " sweet color scheme using true color
   syntax enable
   set background=light
-  colorscheme solarized
+  colorscheme hemisu
 else
   set background=light
 end
