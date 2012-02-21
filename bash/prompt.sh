@@ -1,6 +1,6 @@
-RED="\e[1;31m"
-GREEN="\e[1;32m"
-NO_COLOR="\e[0m"
+RED="\[\e[1;31m\]"
+GREEN="\[\e[1;32m\]"
+NO_COLOR="\[\e[0m\]"
 
 scm_ps1() {
     local s=
