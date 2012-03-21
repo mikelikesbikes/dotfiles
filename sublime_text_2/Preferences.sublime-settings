@@ -1,0 +1,8 @@
+{
+	"auto_complete_commit_on_tab": true,
+	"color_scheme": "Packages/Color Scheme - Default/Sunburst.tmTheme",
+	"font_size": 17.0,
+	"tab_size": 2,
+	"translate_tabs_to_spaces": true,
+  "file_exclude_patterns": [".tags", "tags", ".tags_sorted_by_file"]
+}
