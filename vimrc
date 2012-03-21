@@ -13,27 +13,31 @@ endif
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
+" Store temporary files in a central spot
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+
+" allow backspacing over everything in insert mode
+
 if has("vms")
-  set nobackup         " do not keep a backup file, use versions instead
+  set nobackup                        " do not keep a backup file, use versions instead
 else
-  set backup             " keep a backup file
-  set backupdir=~/.vimbackups,.
-  set backupcopy=yes
+  set backup                          " keep a backup file
 endif
 
-
-set history=50    " keep 50 lines of command line history
-set ruler         " show the cursor position all the time
-set showcmd       " display incomplete commands
-set incsearch     " do incremental searching
-set vb            " turn on visual bell
-set nu            " show line numbers
-set sw=2          " set shiftwidth to 2
-set ts=2          " set number of spaces for a tab to 2
-set et            " expand tabs to spaces
-set ignorecase    " ignorecase in searches
-set hlsearch      " highlight patterns when searching
-set nohidden      " remove buffer when a tab is closed
+set history=50                        " keep 50 lines of command line history
+set ruler                             " show the cursor position all the time
+set showcmd                           " display incomplete commands
+set incsearch                         " do incremental searching
+set vb                                " turn on visual bell
+set nu                                " show line numbers
+set sw=2                              " set shiftwidth to 2
+set ts=2                              " set number of spaces for a tab to 2
+set et                                " expand tabs to spaces
+set ignorecase                        " ignorecase in searches
+set hlsearch                          " highlight patterns when searching
+set nohidden                          " remove buffer when a tab is closed
+set tags=./tags,./../tags,./*/tags    " set tags to look in current directory
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 " let &guioptions = substitute(&guioptions, "t", "", "g")
@@ -97,8 +101,6 @@ cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
-
-noremap <C-t> :CtrlP<CR>
 
 " Sessions ********************************************************************
 set sessionoptions=blank,buffers,curdir,folds,help,options,resize,tabpages,winpos,winsize,globals
