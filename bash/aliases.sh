@@ -50,3 +50,4 @@ alias uat-rev='ssh groupon_uat "cat current/REVISION"'
 alias migrate="rake db:migrate:local"
 alias shit="git"
 alias cputop="top -o cpu -O +rsize -s 5"
+alias cdg="cd ~/projects/groupon"

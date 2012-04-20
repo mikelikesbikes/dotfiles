@@ -7,12 +7,12 @@ require 'wirble'
 Wirble.init
 Wirble.colorize
 
-require "ap"
-IRB::Irb.class_eval do
-  def output_value
-    ap(@context.last_value)
-  end
-end
+# require "ap"
+# IRB::Irb.class_eval do
+#   def output_value
+#     ap(@context.last_value)
+#   end
+# end
 
 alias q exit
 

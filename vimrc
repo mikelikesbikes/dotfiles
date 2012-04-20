@@ -151,3 +151,7 @@ if has("gui_running")
 else
   set background=light
 end
+
+" Command-T ******************************************************************
+noremap <C-t> :CommandT<CR>
+let g:CommandTMaxFiles=80085
