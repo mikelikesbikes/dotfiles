@@ -37,10 +37,10 @@ set et                                " expand tabs to spaces
 set ignorecase                        " ignorecase in searches
 set hlsearch                          " highlight patterns when searching
 set nohidden                          " remove buffer when a tab is closed
-set tags=./tags,./../tags,./*/tags    " set tags to look in current directory
 
-" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
-" let &guioptions = substitute(&guioptions, "t", "", "g")
+" CTags
+map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
+set tags=tmp/tags;/,./tmp/tags;/,tags;/,./tags;/
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -56,9 +56,9 @@ if has("autocmd")
   au!
 
   " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
-  " For all ruby files, set 'shiftwidth' and 'tabspace' to 2 and expand tabs
-  " to spaces.
+  " autocmd FileType text setlocal textwidth=78
+
+  " For all ruby files, set 'shiftwidth' and 'tabspace' to 2 and expand tabs to spaces.
   autocmd FileType ruby,eruby set sw=2 ts=2 et
   autocmd FileType python set sw=4 ts=4 et
 
@@ -71,7 +71,7 @@ if has("autocmd")
     \ endif
 
   " Save on focus lost
-  ":au FocusLost * :wa
+  " :au FocusLost * :wa
 
   augroup END
 
@@ -93,7 +93,6 @@ map <silent> <Leader>V :source $HOME/.vimrc<CR>:if has("gui")<CR>:source $HOME/.
 cmap %/ <C-r>=expand('%:p:h')<CR>/
 " execute current line as shell command, and open output in new window
 map <Leader>x :silent . w ! sh > ~/.vim_cmd.out<CR>:new ~/.vim_cmd.out<CR>
-
 
 " Character mapping
 cnoremap <C-a> <Home>
@@ -147,11 +146,20 @@ if has("gui_running")
   " sweet color scheme using true color
   syntax enable
   set background=light
-  colorscheme hemisu
+  colorscheme molokai
 else
   set background=light
 end
 
+" FuzzyFinder ******************************************************************
+" noremap <C-t> :FufCoverageFile<CR>
+
+" Ctrl-P
+noremap <C-t> :CtrlPMixed<CR>
+
 " Command-T ******************************************************************
-noremap <C-t> :CommandT<CR>
-let g:CommandTMaxFiles=80085
+" noremap <C-t> :CommandT<CR>
+" let g:CommandTMaxFiles=80085
+"
+" OS X clipboard when yanking/pasting
+set clipboard=unnamed

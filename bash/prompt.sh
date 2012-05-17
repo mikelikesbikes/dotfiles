@@ -1,6 +1,7 @@
 RED="\[\e[1;31m\]"
 GREEN="\[\e[1;32m\]"
 NO_COLOR="\[\e[0m\]"
+START_OF_LINE="\[\033[G\]"
 
 scm_ps1() {
     local s=
@@ -21,4 +22,4 @@ scm_ps1() {
 #   }
 # }
 
-export PS1="$NO_COLOR\u:\W$GREEN\$(scm_ps1)$NO_COLOR $ "
+export PS1="$START_OF_LINE$NO_COLOR\u:\W$GREEN\$(scm_ps1)$NO_COLOR $ "
