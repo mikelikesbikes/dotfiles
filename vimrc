@@ -16,14 +16,8 @@ set backspace=indent,eol,start
 " Store temporary files in a central spot
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-
-" allow backspacing over everything in insert mode
-
-if has("vms")
-  set nobackup                        " do not keep a backup file, use versions instead
-else
-  set backup                          " keep a backup file
-endif
+set nobackup                          " do not keep a backup file
+set nowritebackup                     " do not write a backup file
 
 set history=50                        " keep 50 lines of command line history
 set ruler                             " show the cursor position all the time
@@ -85,7 +79,10 @@ endif " has("autocmd")
 "<Leader>v brings up my .vimrc
 "<Leader>V reloads it -- making all changes active (have to save first)
 map <Leader>v :sp $DOTFILES/vimrc<CR>
-map <silent> <Leader>V :source $HOME/.vimrc<CR>:if has("gui")<CR>:source $HOME/.gvimrc<CR>:endif<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+
+" automatically source vimrc if writing .vimrc or vimrc
+autocmd! BufWritePost .vimrc,vimrc source $MYVIMRC
+
 
 " Key sequence mappings
 " In command-mode, typing %/ will replace those chars with the directory of
