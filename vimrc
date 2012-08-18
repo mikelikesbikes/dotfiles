@@ -23,3 +23,6 @@ map <Leader>w :%s/\s\+$//g<CR>
 " Key sequence mappings
 " execute current line as shell command, and open output in new window
 map <Leader>x :silent . w ! sh > ~/.vim_cmd.out<CR>:new ~/.vim_cmd.out<CR>
+
+" suppress netrw history file from being saved
+let g:netrw_dirhistmax=0
