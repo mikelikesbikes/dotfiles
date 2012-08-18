@@ -31,6 +31,16 @@ sspe () {
   fi
 }
 
+rgpull() {
+  FILES="$@/*"
+  for f in $FILES
+  do
+    pushd $f
+    git pull
+    popd
+  done
+}
+
 
 alias ls="ls -G"
 alias lop='sudo lsof -i -P | grep -i "listen"'
