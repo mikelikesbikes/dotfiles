@@ -2,6 +2,7 @@ syntax on
 
 " Visual
   set ruler
+  set number
   set guioptions=ce
   set showmatch                 " Briefly jump to a paren once it's balanced
   set linespace=2
@@ -30,7 +31,6 @@ syntax on
   " persistent undos
   "    set undofile
   "    set undodir=~/.vim/dirs/undos
-
   set backupdir=~/.vim/dirs/backups
   set directory=~/.vim/dirs/swaps
 
@@ -51,6 +51,6 @@ syntax on
 " Misc
   let mapleader = ','
   set history=1000
-  set autoread 
+  set autoread
   set nohidden
   set complete=.,b,u,]
