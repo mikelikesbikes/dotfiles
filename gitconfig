@@ -43,7 +43,7 @@
   changed = green
   untracked = cyan
 [core]
-  excludesfile = /Users/mike/.gitignore
+  excludesfile = ~/.gitignore
 [push]
   default = tracking
 [branch "master"]
