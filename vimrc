@@ -19,6 +19,8 @@ set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set nobackup                          " do not keep a backup file
 set nowritebackup                     " do not write a backup file
 
+set complete=.,b,u,]
+
 set history=50                        " keep 50 lines of command line history
 set ruler                             " show the cursor position all the time
 set showcmd                           " display incomplete commands
@@ -33,7 +35,7 @@ set hlsearch                          " highlight patterns when searching
 set nohidden                          " remove buffer when a tab is closed
 
 " CTags
-map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
+map <Leader>T :!ctags --extra=+f -R *<CR><CR>
 set tags=tmp/tags;/,./tmp/tags;/,tags;/,./tags;/
 
 " Don't use Ex mode, use Q for formatting
@@ -83,6 +85,8 @@ map <Leader>v :sp $DOTFILES/vimrc<CR>
 " automatically source vimrc if writing .vimrc or vimrc
 autocmd! BufWritePost .vimrc,vimrc source $MYVIMRC
 
+" <Leader>w clears end of line whitespace
+map <Leader>w :%s/\s\+$//g<CR>
 
 " Key sequence mappings
 " In command-mode, typing %/ will replace those chars with the directory of
