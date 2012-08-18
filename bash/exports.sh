@@ -1,6 +1,7 @@
 export ARCHFLAGS='-arch x86_64'
 export CC=/usr/bin/gcc-4.2
 export EDITOR="/usr/bin/vim"
+export BUNDLER_EDITOR="mvim"
 export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home
 #export M2_HOME=/usr/local/apache-maven/apache-maven-2.2.1
 #export MAVEN_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xms256m -Xmx512m -XX:MaxPermSize=128m"
