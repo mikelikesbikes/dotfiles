@@ -7,7 +7,14 @@ syntax on
   set showmatch                 " Briefly jump to a paren once it's balanced
   set linespace=2
   set laststatus=2
-  colorscheme molokai
+
+" Colorscheme
+  if has("gui_running")
+    set background="dark"
+    colorscheme molokai
+  else
+    set background="light"
+  end
 
 " Tabs/Whitespace
   set tabstop=2
