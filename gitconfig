@@ -2,10 +2,12 @@
   name = Mike Busch
 	email = busch.michael@gmail.com
 [alias]
-  st = status -sb
+  st = status
+  stb = status -sb
   ci = commit
   br = branch
   co = checkout
+  pr = pull --rebase
   stache = stash
   praise = blame
   # lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
@@ -13,13 +15,9 @@
   lg = log -p
   lol = log --graph --decorate --oneline
   lola = log --graph --decorate --oneline --all
-  rebase-hudson = !cgbranch=$(git symbolic-ref HEAD | sed -n 's:refs/heads/:_:p') && cgsha=$(git log --format="%h" | head -1) && git push origin HEAD:rebase/master/mbusch/${cgsha}${cgbranch}
-  merge-hudson = !cgbranch=$(git symbolic-ref HEAD | sed -n 's:refs/heads/:_:p') && cgsha=$(git log --format="%h" | head -1) && git push origin HEAD:merge/master/mbusch/${cgsha}${cgbranch}
-  test-hudson = !cgbranch=$(git symbolic-ref HEAD | sed -n 's:refs/heads/:_:p') && cgsha=$(git log --format="%h" | head -1) && git push origin HEAD:test/mbusch/${cgsha}${cgbranch}
-  remote-mine = !git remote prune origin && echo "-------------------------------" && git branch -a | grep remotes | grep mbusch
+  shas = log --pretty=format:"%H"
+  sha = log --pretty=format:"%H" -1
   gp = grep -C 2
-  check-uat = !rev=$(uat-rev) && git log HEAD..${rev}
-  hsha = !cat .git/HEAD | cut -c1-7
 
   # "aliases" to get autocomplete to work for pivotal_git_scripts
   about = about
