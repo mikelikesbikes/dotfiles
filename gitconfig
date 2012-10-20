@@ -8,6 +8,7 @@
   co = checkout
   pr = pull --rebase
   amend = commit --amend
+  am = commit --amend -C HEAD
   stache = stash
   praise = blame
   # lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
