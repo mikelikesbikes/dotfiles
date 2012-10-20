@@ -15,6 +15,9 @@ augroup bundles
   " Clojure
     Bundle 'VimClojure'
 
+  " Golang
+    Bundle 'jnwhiteh/vim-golang'
+
   " Markdown/Textile/etc
     Bundle 'timcharper/textile.vim'
     Bundle 'tpope/vim-markdown'
