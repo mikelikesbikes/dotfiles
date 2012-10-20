@@ -1,6 +1,5 @@
 [user]
   name = Mike Busch
-	email = busch.michael@gmail.com
 [alias]
   st = status
   stb = status -sb
