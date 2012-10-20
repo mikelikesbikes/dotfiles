@@ -10,41 +10,15 @@ elseif has("gui_gtk")
 end
 
 if has("gui_macvim")
-  set transp=8
+  set transparency=0            " Stop the ghosting
 end
 
-set lines=50
-set columns=120
-set guioptions-=T
-set guitablabel=%N\ %h%r%m%t
-set guitabtooltip=%F
+set mousehide
 
-set ch=2		" Make command line two lines high
+" set lines=50
+" set columns=120
+" set guioptions-=T
+" set guitablabel=%N\ %h%r%m%t
+" set guitabtooltip=%F
 
-set mousehide		" Hide the mouse when typing text
-
-" Make shift-insert work like in Xterm
-map <S-Insert> <MiddleMouse>
-map! <S-Insert> <MiddleMouse>
-
-" Only do this for Vim version 5.0 and later.
-if version >= 500
-
-  " I like highlighting strings inside C comments
-  let c_comment_strings=1
-
-  " Switch on syntax highlighting if it wasn't on yet.
-  if !exists("syntax_on")
-    syntax on
-  endif
-
-  " Switch on search pattern highlighting.
-  set hlsearch
-
-  " For Win32 version, have "K" lookup the keyword in a help file
-  "if has("win32")
-  "  let winhelpfile='windows.hlp'
-  "  map K :execute "!start winhlp32 -k <cword> " . winhelpfile <CR>
-  "endif
-
-endif
+" Hide the mouse when typing text
