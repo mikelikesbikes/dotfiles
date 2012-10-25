@@ -10,10 +10,10 @@ syntax on
 
 " Colorscheme
   if has("gui_running")
-    set background="dark"
-    colorscheme molokai
+    colorscheme solarized
+    set background=light
   else
-    set background="light"
+    set background=light
   end
 
 " Tabs/Whitespace
