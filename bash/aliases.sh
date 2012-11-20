@@ -41,6 +41,13 @@ rgpull () {
   done
 }
 
+speedtest () {
+  echo "PING"
+  ping -c5 -q google.com | grep 'round-trip'
+  echo "DOWNLOAD"
+  wget --output-document=/dev/null http://speedtest.sea01.softlayer.com/speedtest/speedtest/random1000x1000.jpg
+}
+
 
 alias ls="ls -G"
 alias lop='sudo lsof -i -P | grep -i "listen"'
