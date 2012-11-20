@@ -18,6 +18,8 @@
   shas = log --pretty=format:"%H"
   sha = log --pretty=format:"%H" -1
   gp = grep -C 2
+  bname = rev-parse --abbrev-ref HEAD
+  pb = !branch-name=$(git rev-parse --abbrev-ref HEAD) && handle=$(git config user.handle) && git push origin ${branch-name}:${handle}/${branch-name}
 
   # "aliases" to get autocomplete to work for pivotal_git_scripts
   about = about
