@@ -1,6 +1,6 @@
 # launching console/server
 sc () {
-  if [ -f ./script/rails ]; then 
+  if [ -f ./script/rails ]; then
     rails c $@
   else
     ./script/console $@
@@ -16,7 +16,7 @@ sg () {
 }
 
 ss () {
-  if [ -f ./script/rails ]; then 
+  if [ -f ./script/rails ]; then
     rails s $@
   else
     ./script/server $@
@@ -24,14 +24,14 @@ ss () {
 }
 
 sspe () {
-  if [ -f ./script/rails ]; then 
+  if [ -f ./script/rails ]; then
     sudo rails s -p80 $@
   else
     sudo ./script/server -p80 $@
   fi
 }
 
-rgpull() {
+rgpull () {
   FILES="$@/*"
   for f in $FILES
   do
