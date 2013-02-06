@@ -31,5 +31,6 @@
 # Path stuff (at the bottom)
   export HOMEBREW_PATH="/usr/local/bin:/usr/local/sbin"
   export STORM_PATH="$HOME/projects/storm/storm-0.7.4/bin"
-  export PATH="$HOME/bin:$HOMEBREW_PATH:/opt/local/bin:/opt/local/sbin:/opt/nginx/sbin:$STORM_PATH:$JAVA_HOME/bin:/opt/subversion/bin:$PATH"
+  export HEROKU_PATH="/usr/local/heroku/bin"
+  export PATH="$HEROKU_PATH:$HOME/bin:$HOMEBREW_PATH:/opt/local/bin:/opt/local/sbin:/opt/nginx/sbin:$STORM_PATH:$JAVA_HOME/bin:/opt/subversion/bin:$PATH"
 
