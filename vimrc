@@ -20,6 +20,12 @@ autocmd! BufWritePost .vimrc,vimrc source $MYVIMRC
 " <Leader>w clears end of line whitespace
 map <Leader>w :%s/\s\+$//g<CR>
 
+" <Leader>s converts beginning of line tabs to spaces
+map <Leader>s :retab<CR>
+
+" <Leader>h runs noh
+map <Leader>h :noh<CR>
+
 " Key sequence mappings
 " execute current line as shell command, and open output in new window
 map <Leader>x :silent . w ! sh > ~/.vim_cmd.out<CR>:new ~/.vim_cmd.out<CR>
