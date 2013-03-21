@@ -38,8 +38,10 @@ syntax on
   " persistent undos
   "    set undofile
   "    set undodir=~/.vim/dirs/undos
-  set backupdir=~/.vim/dirs/backups
-  set directory=~/.vim/dirs/swaps
+  "    set backupdir=~/.vim/dirs/backups
+  "    set directory=~/.vim/dirs/swaps
+  set nobackup
+  set noswapfile
 
 " OS X clipboard when yanking/pasting
   set clipboard=unnamed
