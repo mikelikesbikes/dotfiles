@@ -1,6 +1,6 @@
 # Architecture/Compilers
   export ARCHFLAGS='-arch x86_64'
-  export CC=/usr/bin/gcc-4.2
+  export CC=`which gcc-4.2`
 
 # Editor
   export EDITOR="/usr/bin/vim"
