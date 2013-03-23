@@ -22,7 +22,7 @@
   export JRUBY_OPTS="--1.9"
 
 # Java stuff
-  export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home
+  export JAVA_HOME=`/usr/libexec/java_home`
   #export M2_HOME=/usr/local/apache-maven/apache-maven-2.2.1
   #export MAVEN_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xms256m -Xmx512m -XX:MaxPermSize=128m"
   #export MAVEN_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=3998,suspend=n,server=y -Xms256m -Xmx512m -XX:MaxPermSize=256m"
