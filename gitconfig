@@ -20,6 +20,7 @@
   gp = grep -C 2
   bname = rev-parse --abbrev-ref HEAD
   pb = !branch-name=$(git rev-parse --abbrev-ref HEAD) && handle=$(git config user.handle) && git push origin ${branch-name}:${handle}/${branch-name}
+  yolo = !git add -u . && git commit -m 'wip... yolo' && git pull --rebase && git push
 
   # "aliases" to get autocomplete to work for pivotal_git_scripts
   about = about
