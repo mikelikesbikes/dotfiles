@@ -24,4 +24,5 @@ scm_ps1() {
 #   }
 # }
 
-export PS1="$NO_COLOR\u:\W$GREEN\$(scm_ps1)$NO_COLOR $ "
+export GIT_PS1_SHOWDIRTYSTATE=true
+export PS1="$NO_COLOR\u:\W$GREEN\$(__git_ps1)$NO_COLOR $ "
