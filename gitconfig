@@ -1,5 +1,7 @@
 [user]
   name = Mike Busch
+[github]
+  user = mikelikesbikes
 [alias]
   st = status
   stb = status -sb
@@ -9,6 +11,7 @@
   pr = pull --rebase
   amend = commit --amend
   am = commit --amend -C HEAD
+  initialize = !git init && git commit --allow-empty -m 'initial commit'
   stache = stash
   praise = blame
   pom = push origin master
