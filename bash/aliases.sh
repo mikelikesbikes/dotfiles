@@ -60,11 +60,14 @@ alias enginx="vim /opt/nginx/conf/nginx.conf"
 alias snginx="sudo nginx"
 alias rnginx="sudo nginx -s reload"
 alias knginx="sudo nginx -s stop"
-alias uat-rev='ssh groupon_uat "cat current/REVISION"'
-alias migrate="rake db:migrate:local"
-alias shit="git"
 alias cputop="top -o cpu -O +rsize -s 5"
 alias cdg="cd ~/projects/groupon"
-alias s="subl"
 alias be="bundle exec"
+alias s="~/bin/subl -n"
+alias subl="~/bin/subl -n"
+alias mou="open -a /Applications/Mou.app/Contents/MacOS/Mou"
+
+# Humor.
+alias shit="git"
 alias mf="cat ~/.bash/mf.txt"
+
