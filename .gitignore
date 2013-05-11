@@ -1,2 +1,3 @@
 vim/dirs/*
 vim/bundle/*
+.DS_Store
