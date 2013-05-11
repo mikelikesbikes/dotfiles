@@ -1,0 +1,18 @@
+{
+	"installed_packages":
+	[
+		"CTags",
+		"Emmet",
+		"Gist",
+		"Git",
+		"GitGutter",
+		"LiveReload",
+		"Markdown Preview",
+		"Package Control",
+		"TrailingSpaces"
+	],
+	"repositories":
+	[
+		"https://sublime.wbond.net/testing/packages.json"
+	]
+}
