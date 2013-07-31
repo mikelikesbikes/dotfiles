@@ -1,7 +1,7 @@
-Sublime Text 2 MarkDown preview
+Sublime Text 2/3 MarkDown preview
 ===============================
 
-A simple ST2 plugin to help you preview your markdown files quickly in you web browser.
+Preview your markdown files quickly in you web browser from sublime text 2/3. 
 
 You can use builtin [python-markdown2][0] parser (default) or use the [github markdown API][5] for the conversion (edit your settings to select it).
 
@@ -11,19 +11,28 @@ You can use builtin [python-markdown2][0] parser (default) or use the [github ma
 
 ## Features :
 
+
  - Markdown conversion via builtin Markdown Parser ([python-markdown2][0]) or via Github API : just choose in your settings.
  - Browser preview auto reload on save if you have the [ST2 LiveReload plugin][7] installed.
  - Builtin parser : Support TOC, footnotes markdown extensions
  - CSS overriding if you need
  - YAML support thanks to @tommi
  - Clipboard selection and copy to clipboard thanks to @hexatrope
- - MathJax support : \\(\frac{\pi}{2}\\)
+ - MathJax support : \\(\frac{\pi}{2}\\) thanks to @bps10
 
-## Installation :
+## Installation (ST2) :
 
  - you should use [sublime package manager][3]
  - use `cmd+shift+P` then `Package Control: Install Package`
  - look for `Markdown Preview` and install it.
+ - OR, Clone or unpack to "Markdown Preview" folder inside "Packages" of your Sublime installation.
+
+## Installation (ST3) :
+
+The package manager cannot handle both versions yet so here's how to install the plugin :
+
+ - Clone or unpack to "Markdown Preview" folder inside "Packages" of your Sublime installation.
+ - change branch to ST3 with `git checkout ST3`.
 
 ## Usage :
 

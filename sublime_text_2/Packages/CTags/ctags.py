@@ -3,7 +3,7 @@
 ################################################################################
 
 # Std Libs
-from __future__ import with_statement
+
 
 import re
 import unittest
@@ -43,7 +43,8 @@ PATH_IGNORE_FIELDS = ( 'file', 'access', 'signature',
 TAG_PATH_SPLITTERS = ('/', '.', '::', ':')
 
 ################################################################################
-
+def cmp(a,b):
+    return (str(a) > str(b)) - (str(a) < str(b))
 def splits(string, *splitters):
     if splitters:
         split = string.split(splitters[0])
@@ -59,7 +60,7 @@ def parse_tag_lines(lines, order_by='symbol', tag_class=None, filters=[]):
     tags_lookup = {}
 
     for l in lines:
-        search_obj = TAGS_RE.search(l.decode('utf8'))
+        search_obj = TAGS_RE.search(l)
         if not search_obj:
             continue
 
@@ -68,7 +69,7 @@ def parse_tag_lines(lines, order_by='symbol', tag_class=None, filters=[]):
 
         skip = False
         for f in filters:
-            for k, v in f.items():
+            for k, v in list(f.items()):
                 if re.match(v, tag[k]):
                     skip = True
 
@@ -181,9 +182,9 @@ def build_ctags(cmd, tag_file, env=None):
 def test_build_ctags__ctags_not_on_path():
     try:
         build_ctags(['ctags.exe -R'], r'C:\Users\nick\AppData\Roaming\Sublime Text 2\Packages\CTags\tags', env={})
-    except Exception, e:
-        print 'OK'
-        print e
+    except Exception as e:
+        print ('OK')
+        print (e)
     else:
         raise "Should have died"
     # EnvironmentError: (['ctags.exe -R'], 1, '\'"ctags.exe -R"\' is not recognized as an internal or external command,\r\noperable program or batch file.\r\n')
@@ -191,9 +192,9 @@ def test_build_ctags__ctags_not_on_path():
 def test_build_ctags__dodgy_command():
     try:
         build_ctags(['ctags', '--arsts'], r'C:\Users\nick\AppData\Roaming\Sublime Text 2\Packages\CTags\tags')
-    except Exception, e:
-        print 'OK'
-        print e
+    except Exception as e:
+        print ('OK')
+        print (e)
     else:
         raise "Should have died"
 
@@ -203,8 +204,7 @@ class TagFile(object):
     def __init__(self, p, column, match_as=None):
         self.p = p
         self.column = column
-
-        if isinstance(match_as, basestring):
+        if isinstance(match_as, str):
             match_as = getattr(self, match_as)
 
         self.match_as = match_as or self.exact_matches
@@ -212,8 +212,7 @@ class TagFile(object):
     def __getitem__(self, index):
         self.fh.seek(index)
         self.fh.readline()
-
-        try:  return self.fh.readline().split('\t')[self.column]
+        try:  return self.fh.readline().split(b'\t')[self.column]
         # Ask forgiveness not permission
         except IndexError:
             return ''
@@ -251,7 +250,7 @@ class TagFile(object):
 
     def exact_matches(self, iterator, tag):
         for l in iterator:
-            comp = cmp(l.split('\t')[self.column], tag)
+            comp = cmp(l.split('\t')[self.column], tag.decode())
 
             if    comp == -1:    continue
             elif  comp:          break
@@ -261,7 +260,7 @@ class TagFile(object):
     def starts_with(self, iterator, tag):
         for l in iterator:
             field = l.split('\t')[self.column]
-            comp = cmp(field, tag)
+            comp = cmp(field, tag.decode())
 
             if comp == -1: continue
 

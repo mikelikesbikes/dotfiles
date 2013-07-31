@@ -12,6 +12,41 @@ from file import File
 BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 is_python3 = sys.version_info[0] > 2
 
+ctx_info = {
+	'context': None,
+	'callbacks': [],
+	'reload_callbacks': []
+}
+
+# Module callbacks and global JS context sharing
+def on_context_created(cb):
+	if ctx_info['context']:
+		cb(ctx_info['context'])
+	else:
+		ctx_info['callbacks'].append(cb)
+
+def on_context_reload(cb):
+	ctx_info['reload_callbacks'].append(cb)
+
+def on_module_reload():
+	for c in ctx_info['reload_callbacks']:
+		c()
+
+	ctx_info['reload_callbacks'] = ctx_info['callbacks'] = []
+
+def remove_reload_callback(cb):
+	if cb in ctx_info['reload_callbacks']:
+		ctx_info['reload_callbacks'].remove()
+
+def set_global_context(ctx):
+	ctx_info['context'] = ctx
+	for c in ctx_info['callbacks']:
+		c(ctx)
+
+	ctx_info['callbacks'] = []
+
+################################################
+
 core_files = ['emmet-app.js', 'python-wrapper.js']
 
 def should_use_unicode():
@@ -82,7 +117,6 @@ def import_pyv8():
 	if not loaded:
 		raise ImportError('No PyV8 module found')
 	
-
 class Context():
 	"""
 	Creates Emmet JS core context.
@@ -115,6 +149,8 @@ class Context():
 		self._ext_path = None
 		self.set_ext_path(ext_path)
 		self._user_data = None
+
+		set_global_context(self)
 
 	def log(self, message):
 		if self.logger:
@@ -167,42 +203,65 @@ class Context():
 			if self._use_unicode is None:
 				self._use_unicode = should_use_unicode()
 
-			class Global():
-				isEmmet = True
-
 			self._ctx_inited = False
-			self._ctx = PyV8.JSContext(Global())
-			self._ctx.enter()
 
+			class JSContext(PyV8.JSContext):
+				def __enter__(self):
+					if not hasattr(self, '_counter'):
+						self._counter = 0
+					if not self._counter:
+						self.lock = PyV8.JSLocker()
+						self.lock.enter()
+						self.enter()
+						# print('Enter JS context')
+
+					self._counter += 1
+					return self
+
+				def __exit__(self, exc_type, exc_value, traceback):
+					self._counter -= 1
+					if self._counter < 1 or exc_type is not None:
+						# print('Exit JS context')
+						self._counter = 0
+						if self:
+							self.leave()
+						if self.lock:
+							self.lock.leave()
+							self.lock = None
+
+			self._ctx = JSContext()
+		
 			for f in self._core_files:
 				self.eval_js_file(f)
 
-			# load default snippets
-			self._ctx.locals.pyLoadSystemSnippets(self.read_js_file(make_path('snippets.json')))
+			with self._ctx as ctx:
+				# load default snippets
+				ctx.locals.pyLoadSystemSnippets(self.read_js_file(make_path('snippets.json')))
 
-			# expose some methods
-			self._ctx.locals.log = js_log
-			self._ctx.locals.pyFile = File()
+				# expose some methods
+				ctx.locals.log = js_log
+				ctx.locals.pyFile = File()
 
-			if self._contrib:
-				for k in self._contrib:
-					self._ctx.locals[k] = self._contrib[k]
+				if self._contrib:
+					for k in self._contrib:
+						ctx.locals[k] = self._contrib[k]
 
-			self._ctx_inited = True
+				self._ctx_inited = True
 		
-		if not hasattr(PyV8.JSContext.current.locals, 'isEmmet'):
-			print('Enter Emmet context')
-			self._ctx.enter()
+		# if not hasattr(PyV8.JSContext.current.locals, 'isEmmet'):
+		# 	print('Enter Emmet context')
+		# 	self._ctx.enter()
 
 		if self._ctx_inited:
-			if self._should_load_extension:
-				self._ctx.locals.pyResetUserData()
-				self._should_load_extension = False
-				self.load_extensions()
+			with self._ctx as ctx:
+				if self._should_load_extension:
+					ctx.locals.pyResetUserData()
+					self._should_load_extension = False
+					self.load_extensions()
 
-			if self._user_data:
-				self._ctx.locals.pyLoadUserData(self._user_data)
-				self._user_data = None
+				if self._user_data:
+					ctx.locals.pyLoadUserData(self._user_data)
+					self._user_data = None
 
 		return self._ctx
 
@@ -214,7 +273,7 @@ class Context():
 	def reset(self):
 		"Resets JS execution context"
 		if self._ctx:
-			self._ctx.leave()
+			# self._ctx.leave()
 			self._ctx = None
 			try:
 				PyV8.JSEngine.collect()
@@ -229,7 +288,9 @@ class Context():
 		return self.reader(full_path, self._use_unicode)
 
 	def eval(self, source):
-		self.js().eval(source)
+		with self.js() as ctx:
+			ctx.eval(source)
 
 	def eval_js_file(self, file_path, resolve_path=True):
-		self.js().eval(self.read_js_file(file_path, resolve_path), name=file_path, line=0, col=0)
+		with self.js() as ctx:
+			ctx.eval(self.read_js_file(file_path, resolve_path), name=file_path, line=0, col=0)

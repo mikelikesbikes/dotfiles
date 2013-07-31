@@ -166,7 +166,9 @@ class PackageManager():
             return False
 
         url = url.replace(' ', '%20')
-        hostname = urlparse.urlparse(url).hostname.lower()
+        hostname = urlparse.urlparse(url).hostname
+        if hostname:
+            hostname = hostname.lower()
         timeout = self.settings.get('timeout', 3)
 
         rate_limited_domains = get_cache('rate_limited_domains', [])
@@ -265,7 +267,7 @@ class PackageManager():
 
             certs_cache_key = channel + '.certs'
             certs = self.settings.get('certs', {})
-            channel_certs = get_cache('certs_cache_key')
+            channel_certs = get_cache(certs_cache_key)
             if channel_certs:
                 certs.update(channel_certs)
                 self.settings['certs'] = certs
@@ -290,7 +292,16 @@ class PackageManager():
                     if provider.get_packages(repo) == False:
                         continue
                     packages_cache_key = repo + '.packages'
-                    set_cache(packages_cache_key, provider.get_packages(repo), cache_ttl)
+
+                    # Transition from nodeload to codeload
+                    channel_packages = provider.get_packages(repo)
+                    for _name in channel_packages:
+                        package_info = channel_packages[_name]
+                        for download in package_info['downloads']:
+                            download['url'] = download['url'].replace(
+                                'nodeload.github.com', 'codeload.github.com')
+
+                    set_cache(packages_cache_key, channel_packages, cache_ttl)
 
                 # Have the local name map override the one from the channel
                 name_map = provider.get_name_map()
@@ -394,6 +405,14 @@ class PackageManager():
             repository_packages = downloader.packages
             if repository_packages == False:
                 continue
+
+            # Handle the transition from nodeload to codeload
+            for _name in repository_packages:
+                package_info = repository_packages[_name]
+                for download in package_info['downloads']:
+                    download['url'] = download['url'].replace(
+                        'nodeload.github.com', 'codeload.github.com')
+
             cache_key = downloader.repo + '.packages'
             set_cache(cache_key, repository_packages, cache_ttl)
             packages.update(repository_packages)

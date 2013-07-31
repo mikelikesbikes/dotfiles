@@ -11,7 +11,10 @@ import json
 import urllib2
 
 
-settings = sublime.load_settings('MarkdownPreview.sublime-settings')
+try:
+    settings = sublime.load_settings('MarkdownPreview.sublime-settings')
+except:
+    settings = {}
 
 
 def getTempMarkdownPreviewPath(view):
@@ -28,7 +31,8 @@ class MarkdownPreviewListener(sublime_plugin.EventListener):
     ''' auto update the output html if markdown file has already been converted once '''
 
     def on_post_save(self, view):
-        if view.file_name().endswith(tuple(settings.get('markdown_filetypes', (".md", ".markdown", ".mdown")))):
+        filetypes = tuple(settings.get('markdown_filetypes', (".md", ".markdown", ".mdown")))
+        if filetypes and view.file_name().endswith(filetypes):
             temp_file = getTempMarkdownPreviewPath(view)
             if os.path.isfile(temp_file):
                 # reexec markdown conversion
@@ -159,13 +163,19 @@ class MarkdownPreviewCommand(sublime_plugin.TextCommand):
             sublime.status_message('converting markdown with github API...')
             try:
                 github_mode = settings.get('github_mode', 'gfm')
-                data = {"text": markdown, "mode": github_mode}
-                json_data = json.dumps(data)
+                data = {
+                    "text": markdown,
+                    "mode": github_mode
+                }
+                headers = {
+                    'Content-Type': 'application/json'
+                }
+                if github_oauth_token:
+                    headers['Authorization'] = "token %s" % github_oauth_token
+                data = json.dumps(data).encode('utf-8')
                 url = "https://api.github.com/markdown"
                 sublime.status_message(url)
-                request = urllib2.Request(url, json_data, {'Content-Type': 'application/json'})
-                if github_oauth_token:
-                    request.add_header('Authorization', "token %s" % github_oauth_token)
+                request = urllib2.Request(url, data, headers)
                 markdown_html = urllib2.urlopen(request).read().decode('utf-8')
             except urllib2.HTTPError, e:
                 if e.code == 401:
@@ -180,7 +190,10 @@ class MarkdownPreviewCommand(sublime_plugin.TextCommand):
                 sublime.status_message('converted markdown with github API successfully')
         else:
             # convert the markdown
-            markdown_html = markdown2.markdown(markdown, extras=['footnotes', 'toc', 'fenced-code-blocks', 'cuddled-lists'])
+            enabled_extras = set(settings.get('enabled_extensions', ['footnotes', 'toc', 'fenced-code-blocks', 'cuddled-lists']))
+            if settings.get("enable_mathjax") is True or settings.get("enable_highlight") is True:
+                enabled_extras.add('code-friendly')
+            markdown_html = markdown2.markdown(markdown, extras=list(enabled_extras))
             toc_html = markdown_html.toc_html
             if toc_html:
                 toc_markers = ['[toc]', '[TOC]', '<!--TOC-->']
@@ -212,6 +225,7 @@ class MarkdownPreviewCommand(sublime_plugin.TextCommand):
         if target in ['disk', 'browser']:
             # check if LiveReload ST2 extension installed and add its script to the resulting HTML
             livereload_installed = ('LiveReload' in os.listdir(sublime.packages_path()))
+            # build the html
             if livereload_installed:
                 full_html += '<script>document.write(\'<script src="http://\' + (location.host || \'localhost\').split(\':\')[0] + \':35729/livereload.js?snipver=1"></\' + \'script>\')</script>'
             # update output html file
@@ -240,6 +254,9 @@ class MarkdownPreviewCommand(sublime_plugin.TextCommand):
             # create a new buffer and paste the output HTML
             new_view = self.view.window().new_file()
             new_view.set_scratch(True)
+            # new_view.run_command('append', {
+            #     'characters': markdown_html,
+            # })
             new_edit = new_view.begin_edit()
             new_view.insert(new_edit, 0, markdown_html)
             new_view.end_edit(new_edit)
