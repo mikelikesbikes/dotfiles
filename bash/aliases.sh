@@ -70,4 +70,5 @@ alias mou="open -a /Applications/Mou.app/Contents/MacOS/Mou"
 # Humor.
 alias shit="git"
 alias mf="cat ~/.bash/mf.txt"
+alias chittychitty="sudo" # primary use-case: chittychitty !!
 
