@@ -57,3 +57,7 @@
   keepBackup = false
 [include]
   path = ~/.gitconfig.local
+
+# Use the OSX keychain to cache your github credentials
+[credential]
+  helper = osxkeychain
