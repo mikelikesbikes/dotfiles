@@ -8,7 +8,7 @@
 		".tags_sorted_by_file"
 	],
 	"find_selected_text": true,
-	"font_size": 23.0,
+	"font_size": 15.0,
 	"ignored_packages":
 	[
 		"Vintage"
