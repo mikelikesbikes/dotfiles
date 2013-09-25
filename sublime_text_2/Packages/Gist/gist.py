@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 import sublime
 import sublime_plugin
@@ -80,10 +81,6 @@ class MissingCredentialsException(Exception):
     pass
 
 
-class CurlNotFoundException(Exception):
-    pass
-
-
 class SimpleHTTPError(Exception):
     def __init__(self, code, response):
         self.code = code
@@ -140,6 +137,11 @@ def catch_errors(fn):
 
 
 def create_gist(public, description, files):
+    for filename, text in list(files.items()):
+        if not text:
+            sublime.error_message("Gist: Unable to create a Gist with empty content")
+            return
+
     file_data = dict((filename, {'content': text}) for filename, text in list(files.items()))
     data = json.dumps({'description': description, 'public': public, 'files': file_data})
     gist = api_request(GISTS_URL, data)
@@ -187,6 +189,9 @@ def open_gist(gist_url):
     files = sorted(gist['files'].keys())
 
     for gist_filename in files:
+        if gist['files'][gist_filename]['type'].split('/')[0] != 'text':
+            continue
+
         view = sublime.active_window().new_file()
 
         gistify_view(view, gist, gist_filename)
@@ -256,9 +261,12 @@ def get_user_gists(user):
 
 
 def gist_title(gist):
-    file_name = sorted(gist['files'].keys())
     description = gist.get('description')
-    title = description or file_name[0] or gist.get('id')
+
+    if description and settings.get('prefer_filename') is False:
+        title = description
+    else:
+        title = list(gist['files'].keys())[0]
 
     if settings.get('show_authors'):
         return [title, gist.get('user').get('login')]
@@ -276,27 +284,25 @@ def gists_filter(all_gists):
     else:
         tag_prog = False
 
-    if not prefix and not tag_prog:
-        return [all_gists, [gist_title(gist) for gist in all_gists]]
-
     gists = []
     gists_names = []
+
     for gist in all_gists:
+        if not gist['files']:
+            continue
+
         name = gist_title(gist)
 
         if prefix and name[0][0:prefix_len] == prefix:
             name[0] = name[0][prefix_len:]
-
-            gists.append(gist)
-            gists_names.append(name)
-
         elif tag_prog:
             match = re.search(tag_prog, name[0])
+
             if match:
                 name[0] = name[0][0:match.start()] + name[0][match.end():]
 
-                gists.append(gist)
-                gists_names.append(name)
+        gists.append(gist)
+        gists_names.append(name)
 
     return [gists, gists_names]
 
@@ -312,10 +318,7 @@ def api_request_native(url, data=None, method=None):
     request.add_header('Content-Type', 'application/json')
 
     if data is not None:
-        if PY3:
-            request.add_data(bytes(data, 'utf8'))
-        else:
-            request.add_data(data)
+        request.add_data(bytes(data.encode('utf8')))
 
     # print('API request data:', request.get_data())
     # print('API request header:', request.header_items())
@@ -330,7 +333,7 @@ def api_request_native(url, data=None, method=None):
             if response.code == 204:  # No Content
                 return None
             else:
-                return json.loads(response.read().decode('utf8'))
+                return json.loads(response.read().decode('utf8', 'ignore'))
 
     except urllib.HTTPError as err:
         with contextlib.closing(err):
@@ -366,12 +369,12 @@ def api_request_curl(url, data=None, method=None):
         header_output_file.close()
         with named_tempfile() as data_file:
             if data is not None:
-                data_file.write(data)
+                data_file.write(bytes(data.encode('utf8')))
                 data_file.close()
                 config.append('--data-binary "@%s"' % data_file.name)
 
             process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            response, _ = process.communicate('\n'.join(config))
+            response, _ = process.communicate(bytes('\n'.join(config).encode('utf8')))
             returncode = process.returncode
 
             if returncode != 0:
@@ -384,7 +387,7 @@ def api_request_curl(url, data=None, method=None):
                 if responsecode == 204:  # No Content
                     return None
                 elif 200 <= responsecode < 300 or responsecode == 100:  # Continue
-                    return json.loads(response.decode('utf8'))
+                    return json.loads(response.decode('utf8', 'ignore'))
                 else:
                     raise SimpleHTTPError(responsecode, response)
 
@@ -436,6 +439,9 @@ class GistCommand(sublime_plugin.TextCommand):
                     gist_data = dict((make_filename(idx), data) for idx, data in enumerate(region_data, 1))
 
                 gist = create_gist(self.public, description, gist_data)
+
+                if not gist:
+                    return
 
                 gist_html_url = gist['html_url']
                 sublime.set_clipboard(gist_html_url)
@@ -573,7 +579,7 @@ class GistListCommandBase(object):
         filtered_stars = gists_filter(get_gists(STARRED_GISTS_URL))
 
         self.gists = filtered[0] + filtered_stars[0]
-        gist_names = filtered[1] + list(map(lambda x: ["* " + x[0]], filtered_stars[1]))
+        gist_names = filtered[1] + list(map(lambda x: [u"★ " + x[0]], filtered_stars[1]))
 
         if settings.get('include_users'):
             self.users = list(settings.get('include_users'))

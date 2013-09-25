@@ -12,8 +12,9 @@ def console_write(string, prefix=False):
         If the string "Package Control: " should be prefixed to the string
     """
 
-    if isinstance(string, unicode):
-        string = string.encode('UTF-8')
+    if sys.version_info < (3,):
+        if isinstance(string, unicode):
+            string = string.encode('UTF-8')
     if prefix:
         sys.stdout.write('Package Control: ')
     print(string)

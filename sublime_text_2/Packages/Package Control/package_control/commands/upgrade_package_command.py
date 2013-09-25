@@ -1,6 +1,7 @@
+import threading
+
 import sublime
 import sublime_plugin
-import threading
 
 from ..show_error import show_error
 from ..thread_progress import ThreadProgress
@@ -69,7 +70,7 @@ class UpgradePackageThread(threading.Thread, PackageInstaller):
             return
         name = self.package_list[picked][0]
 
-        if self.disable_package(name):
+        if name in self.disable_packages(name):
             on_complete = lambda: self.reenable_package(name)
         else:
             on_complete = None

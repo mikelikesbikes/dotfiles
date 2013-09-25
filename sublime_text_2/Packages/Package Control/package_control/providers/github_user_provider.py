@@ -1,86 +1,172 @@
 import re
-import datetime
 
-from .non_caching_provider import NonCachingProvider
+from ..clients.github_client import GitHubClient
+from ..downloaders.downloader_exception import DownloaderException
+from ..clients.client_exception import ClientException
+from .provider_exception import ProviderException
 
 
-class GitHubUserProvider(NonCachingProvider):
+class GitHubUserProvider():
     """
-    Allows using a GitHub user/organization as the source for multiple packages
+    Allows using a GitHub user/organization as the source for multiple packages,
+    or in Package Control terminology, a "repository".
 
     :param repo:
         The public web URL to the GitHub user/org. Should be in the format
         `https://github.com/user`.
 
-    :param package_manager:
-        An instance of :class:`PackageManager` used to access the API
+    :param settings:
+        A dict containing at least the following fields:
+          `cache_length`,
+          `debug`,
+          `timeout`,
+          `user_agent`,
+        Optional fields:
+          `http_proxy`,
+          `https_proxy`,
+          `proxy_username`,
+          `proxy_password`,
+          `query_string_params`
+          `install_prereleases`
     """
 
-    def __init__(self, repo, package_manager):
+    def __init__(self, repo, settings):
+        self.cache = {}
         self.repo = repo
-        self.package_manager = package_manager
+        self.settings = settings
+        self.failed_sources = {}
 
-    def match_url(self):
+    @classmethod
+    def match_url(cls, repo):
         """Indicates if this provider can handle the provided repo"""
 
-        return re.search('^https?://github.com/[^/]+/?$', self.repo) != None
+        return re.search('^https?://github.com/[^/]+/?$', repo) != None
 
-    def get_packages(self):
-        """Uses the GitHub API to construct necessary info for all packages"""
+    def prefetch(self):
+        """
+        Go out and perform HTTP operations, caching the result
+        """
 
-        user_match = re.search('^https?://github.com/([^/]+)/?$', self.repo)
-        user = user_match.group(1)
+        [name for name, info in self.get_packages()]
 
-        api_url = 'https://api.github.com/users/%s/repos?per_page=100' % user
+    def get_failed_sources(self):
+        """
+        List of any URLs that could not be accessed while accessing this repository
 
-        repo_info = self.fetch_json(api_url)
-        if repo_info == False:
-            return False
+        :raises:
+            DownloaderException: when there is an issue download package info
+            ClientException: when there is an issue parsing package info
 
-        packages = {}
-        for package_info in repo_info:
-            # All packages for the user are made available, and always from
-            # the master branch. Anything else requires a custom packages.json
-            commit_api_url = ('https://api.github.com/repos/%s/%s/commits' + \
-                '?sha=master&per_page=1') % (user, package_info['name'])
+        :return:
+            A generator of ("https://github.com/user/repo", Exception()) tuples
+        """
 
-            commit_info = self.fetch_json(commit_api_url)
-            if commit_info == False:
-                return False
+        return self.failed_sources.items()
 
-            commit_date = commit_info[0]['commit']['committer']['date']
-            timestamp = datetime.datetime.strptime(commit_date[0:19],
-                '%Y-%m-%dT%H:%M:%S')
-            utc_timestamp = timestamp.strftime(
-                '%Y.%m.%d.%H.%M.%S')
+    def get_broken_packages(self):
+        """
+        For API-compatibility with RepositoryProvider
+        """
 
-            homepage = package_info['homepage']
-            if not homepage:
-                homepage = package_info['html_url']
+        return {}.items()
 
-            package = {
-                'name': package_info['name'],
-                'description': package_info['description'] if \
-                    package_info['description'] else 'No description provided',
-                'url': homepage,
-                'author': package_info['owner']['login'],
-                'last_modified': timestamp.strftime('%Y-%m-%d %H:%M:%S'),
-                'downloads': [
-                    {
-                        'version': utc_timestamp,
-                        # We specifically use codeload.github.com here because
-                        # the download URLs all redirect there, and some of the
-                        # downloaders don't follow HTTP redirect headers
-                        'url': 'https://codeload.github.com/' + \
-                            package_info['owner']['login'] + '/' + \
-                            package_info['name'] + '/zip/master'
-                    }
-                ]
-            }
-            packages[package['name']] = package
-        return packages
+    def get_packages(self, invalid_sources=None):
+        """
+        Uses the GitHub API to construct necessary info for all packages
+
+        :param invalid_sources:
+            A list of URLs that should be ignored
+
+        :raises:
+            DownloaderException: when there is an issue download package info
+            ClientException: when there is an issue parsing package info
+
+        :return:
+            A generator of
+            (
+                'Package Name',
+                {
+                    'name': name,
+                    'description': description,
+                    'author': author,
+                    'homepage': homepage,
+                    'last_modified': last modified date,
+                    'download': {
+                        'url': url,
+                        'date': date,
+                        'version': version
+                    },
+                    'previous_names': [],
+                    'labels': [],
+                    'sources': [the user URL],
+                    'readme': url,
+                    'issues': url,
+                    'donate': url,
+                    'buy': None
+                }
+            )
+            tuples
+        """
+
+        if 'get_packages' in self.cache:
+            for key, value in self.cache['get_packages'].items():
+                yield (key, value)
+            return
+
+        client = GitHubClient(self.settings)
+
+        if invalid_sources != None and self.repo in invalid_sources:
+            raise StopIteration()
+
+        try:
+            user_repos = client.user_info(self.repo)
+        except (DownloaderException, ClientException, ProviderException) as e:
+            self.failed_sources = [self.repo]
+            self.cache['get_packages'] = e
+            raise e
+
+        output = {}
+        for repo_info in user_repos:
+            try:
+                name = repo_info['name']
+                repo_url = 'https://github.com/' + repo_info['user_repo']
+
+                download = client.download_info(repo_url)
+
+                details = {
+                    'name': name,
+                    'description': repo_info['description'],
+                    'homepage': repo_info['homepage'],
+                    'author': repo_info['author'],
+                    'last_modified': download.get('date'),
+                    'download': download,
+                    'previous_names': [],
+                    'labels': [],
+                    'sources': [self.repo],
+                    'readme': repo_info['readme'],
+                    'issues': repo_info['issues'],
+                    'donate': repo_info['donate'],
+                    'buy': None
+                }
+                output[name] = details
+                yield (name, details)
+
+            except (DownloaderException, ClientException, ProviderException) as e:
+                self.failed_sources[repo_url] = e
+
+        self.cache['get_packages'] = output
 
     def get_renamed_packages(self):
-        """For API-compatibility with :class:`PackageProvider`"""
+        """For API-compatibility with RepositoryProvider"""
 
         return {}
+
+    def get_unavailable_packages(self):
+        """
+        Method for compatibility with RepositoryProvider class. These providers
+        are based on API calls, and thus do not support different platform
+        downloads, making it impossible for there to be unavailable packages.
+
+        :return: An empty list
+        """
+        return []
