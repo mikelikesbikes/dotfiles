@@ -1,5 +1,3 @@
-alias be="bundle exec"
-
 source "$HOME/.bash/exports.sh"
 source "$HOME/.bash/completion.sh"
 source "$HOME/.bash/prompt.sh"
