@@ -9,7 +9,5 @@ source "$HOME/.bash/maven_color.sh"
 
 [[ -r "$HOME/.bashrc" ]] && source "$HOME/.bashrc"
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
-
 # This loads rbenv shims and completion
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
