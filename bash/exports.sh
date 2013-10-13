@@ -12,7 +12,7 @@
   export LSCOLORS=gxfxcxdxbxegedabagacad
 
 #RbEnv System Ruby
-  export RBENV_VERSION=1.9.3-p392
+  export RBENV_VERSION=1.9.3-p448
 
 #Ruby Enterprise Edition
   export RUBY_HEAP_MIN_SLOTS=1000000
