@@ -1,0 +1,18 @@
+{
+    "schema_version": "2.0",
+    "packages": [
+        {
+            "name": "DashDoc",
+            "description": "Open the selected text or text under cursor in Dash documentation browser",
+            "details": "https://github.com/farcaller/DashDoc",
+            "issues": "https://github.com/farcaller/DashDoc/issues",
+            "donate": "https://www.gittip.com/farcaller/",
+            "releases": [
+                {
+                    "platforms": ["osx"],
+                    "details": "https://github.com/farcaller/DashDoc/tags"
+                }
+            ]
+        }
+    ]
+}

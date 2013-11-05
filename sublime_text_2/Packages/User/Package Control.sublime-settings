@@ -3,6 +3,7 @@
 	"installed_packages":
 	[
 		"CTags",
+		"DashDoc",
 		"Emmet",
 		"Gist",
 		"Git",
