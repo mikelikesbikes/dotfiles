@@ -1,10 +1,8 @@
 source /usr/local/etc/bash_completion.d/git-prompt.sh
 source ~/.bash/colors.sh
 
-RED="\[\e[1;31m\]"
-GREEN="\[\e[1;32m\]"
-NO_COLOR="\[\e[0m\]"
-START_OF_LINE="\[\033[G\]"
+RUBY=$'\xf0\x9f\x94\xbb'
+ARROW=$'\xe2\x9e\x9c'
 
 scm_ps1() {
     local s=
@@ -17,13 +15,11 @@ scm_ps1() {
     echo -n "$s"
 }
 
-# function rvm_ruby_prompt {
-#   if (declare -f rvm > /dev/null) {
-#       if [[ -x $MY_RUBY_HOME ]]
-#       then ruby -v | sed 's/\([^(]*\).*/\1/'
-#       fi
-#   }
-# }
+rbenv_ruby_version() {
+  if which rbenv > /dev/null; then
+    rbenv version | sed 's/\([^ ]*\).*/\1/'
+  fi
+}
 
 export GIT_PS1_SHOWDIRTYSTATE=true
-export PS1="$NO_COLOR\u:\W$GREEN\$(__git_ps1)$NO_COLOR $ "
+export PS1="$Blue\u$ResetColor_Off:$BCyan\w$Green\$(__git_ps1) $IRed$RUBY $(rbenv_ruby_version)$ResetColor_Off\n$Purple$ARROW  $ResetColor_Off"
