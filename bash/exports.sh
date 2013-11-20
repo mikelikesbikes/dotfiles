@@ -37,3 +37,7 @@
   export HEROKU_PATH="/usr/local/heroku/bin"
   export PATH="$HEROKU_PATH:$HOME/bin:$HOMEBREW_PATH:$STORM_PATH:$JAVA_HOME/bin:/opt/subversion/bin:$PATH"
 
+# History stuff
+  shopt -s histappend
+  export HISTCONTROL=ignoreboth
+  export HISTSIZE=10000
