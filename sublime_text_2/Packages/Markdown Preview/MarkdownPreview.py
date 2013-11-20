@@ -33,7 +33,8 @@ else: # ST2
     from urllib2 import Request, urlopen, HTTPError, URLError
 
 _CANNOT_CONVERT = u'cannot convert markdown'
-    
+
+
 def getTempMarkdownPreviewPath(view):
     ''' return a permanent full path of the temp markdown preview file '''
 
@@ -128,8 +129,13 @@ class MarkdownPreviewListener(sublime_plugin.EventListener):
             temp_file = getTempMarkdownPreviewPath(view)
             if os.path.isfile(temp_file):
                 # reexec markdown conversion
-                view.run_command('markdown_preview', {'target': 'disk'})
+                # todo : check if browser still opened and reopen it if needed
+                view.run_command('markdown_preview', {
+                    'target': 'disk',
+                    'parser': view.settings().get('parser')
+                })
                 sublime.status_message('Markdown preview file updated')
+
 
 
 class MarkdownCheatsheetCommand(sublime_plugin.TextCommand):
@@ -153,13 +159,20 @@ class MarkdownCheatsheetCommand(sublime_plugin.TextCommand):
 class MarkdownCompiler():
     ''' Do the markdown converting '''
 
-    def get_search_path_css(self):
+    def isurl(self, css_name):
+        match = re.match(r'https?://', css_name)
+        if match:
+            return True
+        return False
+
+    def get_search_path_css(self, parser):
         css_name = self.settings.get('css', 'default')
-        if os.path.isabs(css_name):
+
+        if self.isurl(css_name) or os.path.isabs(css_name):
             return u"<link href='%s' rel='stylesheet' type='text/css'>" % css_name
 
         if css_name == 'default':
-            css_name = 'github.css' if self.settings.get('parser', 'default') == 'github' else 'markdown.css'
+            css_name = 'github.css' if parser == 'github' else 'markdown.css'
 
         # Try the local folder for css file.
         mdfile = self.view.file_name()
@@ -186,9 +199,9 @@ class MarkdownCompiler():
                             return u"<style>%s</style>" % load_utf8(css_filename)
         return ''
 
-    def get_stylesheet(self):
+    def get_stylesheet(self, parser):
         ''' return the correct CSS file based on parser and settings '''
-        return self.get_search_path_css() + self.get_override_css()
+        return self.get_search_path_css(parser) + self.get_override_css()
 
     def get_javascript(self):
         js_files = self.settings.get('js')
@@ -268,6 +281,24 @@ class MarkdownCompiler():
             config_extensions.extend( default_extensions )
         return config_extensions
 
+    def curl_convert(self, data):
+        try:
+            import subprocess
+            shell_safe_json = data.decode('utf-8').replace('\"', '\\"').replace("`", "\\`")
+            curl_args = [
+                'curl',
+                '-H',
+                '"Content-Type: application/json"',
+                '-d',
+                '"' + shell_safe_json + '"',
+                'https://api.github.com/markdown'
+            ]
+            markdown_html = subprocess.Popen(curl_args, stdout=subprocess.PIPE).communicate()[0].decode('utf-8')
+            return markdown_html
+        except subprocess.CalledProcessError as e:
+            sublime.error_message('cannot use github API to convert markdown. SSL is not included in your Python installation. And using curl didn\'t work either')
+        return None
+
     def convert_markdown(self, markdown_text, parser):
         ''' convert input markdown to HTML, with github or builtin parser '''
 
@@ -277,18 +308,19 @@ class MarkdownCompiler():
 
             # use the github API
             sublime.status_message('converting markdown with github API...')
+            github_mode = self.settings.get('github_mode', 'gfm')
+            data = {
+                "text": markdown_text,
+                "mode": github_mode
+            }
+            data = json.dumps(data).encode('utf-8')
+
             try:
-                github_mode = self.settings.get('github_mode', 'gfm')
-                data = {
-                    "text": markdown_text,
-                    "mode": github_mode
-                }
                 headers = {
                     'Content-Type': 'application/json'
                 }
                 if github_oauth_token:
                     headers['Authorization'] = "token %s" % github_oauth_token
-                data = json.dumps(data).encode('utf-8')
                 url = "https://api.github.com/markdown"
                 sublime.status_message(url)
                 request = Request(url, data, headers)
@@ -300,7 +332,9 @@ class MarkdownCompiler():
                 else:
                     sublime.error_message('github API responded in an unfashion way :/')
             except URLError:
-                sublime.error_message('cannot use github API to convert markdown. SSL is not included in your Python installation')
+                # Maybe this is a Linux-install of ST which doesn't bundle with SSL support
+                # So let's try wrapping curl instead
+                markdown_html = self.curl_convert(data)
             except:
                 e = sys.exc_info()[1]
                 print(e)
@@ -349,7 +383,7 @@ class MarkdownCompiler():
 
         html = u'<!DOCTYPE html>'
         html += '<html><head><meta charset="utf-8">'
-        html += self.get_stylesheet()
+        html += self.get_stylesheet(parser)
         html += self.get_javascript()
         html += self.get_highlight()
         html += self.get_mathjax()
@@ -368,6 +402,11 @@ compiler = MarkdownCompiler()
 class MarkdownPreviewCommand(sublime_plugin.TextCommand):
     def run(self, edit, parser='markdown', target='browser'):
         settings = sublime.load_settings('MarkdownPreview.sublime-settings')
+
+        # backup parser+target for later saves
+        self.view.settings().set('parser', parser)
+        self.view.settings().set('target', target)
+
         html, body = compiler.run(self.view, parser)
 
         if target in ['disk', 'browser']:

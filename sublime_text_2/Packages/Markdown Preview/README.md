@@ -1,17 +1,17 @@
 Sublime Text 2/3 Markdown Preview
 =================================
 
-Preview your markdown files quickly in you web browser from sublime text 2/3. 
+Preview and build your markdown files quickly in your web browser from sublime text 2/3. 
 
 You can use builtin [python-markdown][10] parser or use the [github markdown API][5] for the conversion.
 
 **NOTE:** If you choose the GitHub API for conversion (set parser: github in your settings), your code will be sent through https to github for live conversion. You'll have [Github flavored markdown][6], syntax highlighting and EMOJI support for free :heart: :octocat: :gift:. If you make more than 60 calls a day, be sure to set your GitHub API key in the settings :)
 
-**LINUX users:** If you want to use GitHub API for conversion, you'll need to have a custom Python install that includes python-ssl as its not built in the Sublime Text 2 Linux package. see [@dusteye comment][8]. If you use a custom window manager, also be sure to set a `BROWSER` environnement variable. see [@PPvG comments][9]
+**LINUX users:** If you want to use GitHub API for conversion, you'll need to have a custom Python install that includes python-ssl as its not built in the Sublime Text 2 Linux package. see [@dusteye comment][8]. If you use a custom window manager, also be sure to set a `BROWSER` environment variable. see [@PPvG comments][9]
 
 ## Features :
 
- - Markdown preivew using the [Python-markdown][10] or the Github API just choose select the build commands.
+ - Markdown preview using the [Python-markdown][10] or the Github API just choose select the build commands.
  - Build markdown file using Sublime Text build system. The build parser are config via the `"parser"` config.
  - Browser preview auto reload on save if you have the [ST2 LiveReload plugin][7] installed.
  - Builtin parser : supports `abbr`, `attr_list`, `def_list`, `fenced_code`, `footnotes`, `tables`, `smart_strong` and `toc` markdown extensions.
@@ -22,9 +22,9 @@ You can use builtin [python-markdown][10] parser or use the [github markdown API
 
 ## Installation :
 
-### Using [Package Control][3] (*Recommanded*)
+### Using [Package Control][3] (*Recommended*)
 
-For all Sublime Text 2/3 users we recommand installe via [Package Control][3].
+For all Sublime Text 2/3 users we recommend install via [Package Control][3].
 
 1. [Install][11] Package Control if you haven't yet.
 2. Use `cmd+shift+P` then `Package Control: Install Package`
@@ -39,9 +39,9 @@ For all Sublime Text 2/3 users we recommand installe via [Package Control][3].
 
 ## Usage :
 
-### To preivew :
+### To preview :
 
- - optionnaly select some of your markdown for conversion
+ - optionally select some of your markdown for conversion
  - use `cmd+shift+P` then `Markdown Preview` to show the follow commands:
 	- Markdown Preview: Python Markdown: Preview in Browser
 	- Markdown Preview: Python Markdown: Export HTML in Sublime Text
@@ -60,10 +60,10 @@ For all Sublime Text 2/3 users we recommand installe via [Package Control][3].
 
 ### To config :
 
-Using Sublime Text menu: `Preferences`->`Package Settings`->`Markdown Preivew`
+Using Sublime Text menu: `Preferences`->`Package Settings`->`Markdown Preview`
 
-- `Settings - User` is where you change your serrings for Markdown Preview.
-- `Settings - Default` is a good reference with detail description for each setting.
+- `Settings - User` is where you change your settings for Markdown Preview.
+- `Settings - Default` is a good reference with detailed descriptions for each setting.
 
 
 ## Support :
@@ -72,7 +72,7 @@ Using Sublime Text menu: `Preferences`->`Package Settings`->`Markdown Preivew`
 - And you are welcome to fork and submit pullrequests.
 
 
-## Licence :
+## License :
 
 The code is available at github [project][home] under [MIT licence][4].
 
