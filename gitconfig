@@ -5,7 +5,7 @@
 [alias]
   st = status
   stb = status -sb
-  ci = commit
+  ci = commit -v
   br = branch
   co = checkout
   pr = pull --rebase

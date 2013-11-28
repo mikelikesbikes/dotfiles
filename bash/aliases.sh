@@ -66,6 +66,7 @@ alias be="bundle exec"
 alias s="~/bin/subl -n"
 alias subl="~/bin/subl -n"
 alias mou="open -a /Applications/Mou.app/Contents/MacOS/Mou"
+alias use-bundler="bundle exec bash -l"
 
 # Humor.
 alias shit="git"

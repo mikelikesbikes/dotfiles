@@ -3,10 +3,12 @@
 	"installed_packages":
 	[
 		"CTags",
+		"DashDoc",
 		"Emmet",
 		"Gist",
 		"Git",
 		"GitGutter",
+		"Javascript Beautify",
 		"LiveReload",
 		"Markdown Preview",
 		"Package Control",
