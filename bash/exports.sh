@@ -2,6 +2,14 @@
   export ARCHFLAGS='-arch x86_64'
   export CC=`which gcc-4.2`
 
+  # Homebrew libxslt build variables
+  export LDFLAGS="$LDFLAGS -L/usr/local/opt/libxslt/lib"
+  export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/libxslt/include"
+
+  # Homebrew libxml build variables
+  export LDFLAGS="$LDFLAGS -L/usr/local/opt/libxml2/lib"
+  export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/libxml2/include"
+
 # Editor
   export EDITOR="/usr/bin/vim"
   export BUNDLER_EDITOR="mvim"
