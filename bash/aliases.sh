@@ -72,4 +72,8 @@ alias use-bundler="bundle exec bash -l"
 alias shit="git"
 alias mf="cat ~/.bash/mf.txt"
 alias chittychitty="sudo" # primary use-case: chittychitty !!
+rcowsay () {
+  randcow=`ls /usr/local/share/cows/* | gsort -R | head -1`
+  cowsay -f $randcow $@
+}
 
