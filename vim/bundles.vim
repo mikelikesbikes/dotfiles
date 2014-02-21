@@ -15,6 +15,9 @@ augroup bundles
   " Clojure
     Bundle 'VimClojure'
 
+  " Scala
+    Bundle 'derekwyatt/vim-scala'
+
   " Golang
     Bundle 'jnwhiteh/vim-golang'
 
