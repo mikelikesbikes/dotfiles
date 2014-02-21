@@ -20,7 +20,7 @@
   export LSCOLORS=gxfxcxdxbxegedabagacad
 
 #RbEnv System Ruby
-  export RBENV_VERSION=1.9.3-p448
+  export RBENV_VERSION=2.0.0-p247
 
 #Ruby Enterprise Edition
   export RUBY_HEAP_MIN_SLOTS=1000000
@@ -49,3 +49,4 @@
   shopt -s histappend
   export HISTCONTROL=ignoreboth
   export HISTSIZE=10000
+
