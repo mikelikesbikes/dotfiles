@@ -33,7 +33,7 @@
 [core]
   excludesfile = ~/.gitignore
 [push]
-  default = tracking
+  default = upstream
 [mergetool]
   keepBackup = false
 [include]
