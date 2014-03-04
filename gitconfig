@@ -22,7 +22,7 @@
   sha = log --pretty=format:"%H" -1
   gp = grep -C 2
   bname = rev-parse --abbrev-ref HEAD
-  yolo = !git add -u . && git commit -m 'wip... yolo' && git pull --rebase && git push
+  yolo = !git add --all . && git commit --no-verify --allow-empty -m 'yolo' && git push --force
 
   # "aliases" to get autocomplete to work for pivotal_git_scripts
   about = about
