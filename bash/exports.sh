@@ -19,9 +19,6 @@
   export CDPATH=.:$HOME:$HOME/projects
   export LSCOLORS=gxfxcxdxbxegedabagacad
 
-#RbEnv System Ruby
-  export RBENV_VERSION=2.0.0-p247
-
 #Ruby Enterprise Edition
   export RUBY_HEAP_MIN_SLOTS=1000000
   export RUBY_HEAP_SLOTS_INCREMENT=1000000
@@ -49,4 +46,5 @@
   shopt -s histappend
   export HISTCONTROL=ignoreboth
   export HISTSIZE=10000
+  export PROMPT_COMMAND="history -a; history -n;$PROMPT_COMMAND"
 
