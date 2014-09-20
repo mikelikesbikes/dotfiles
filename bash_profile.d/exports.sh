@@ -36,11 +36,11 @@
   #export MAVEN_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=3998,suspend=n,server=y -Xms256m -Xmx512m -XX:MaxPermSize=256m"
   #export M2=$M2_HOME/bin
 
-# Path stuff (at the bottom)
+# Path stuff
   export HOMEBREW_PATH="/usr/local/bin:/usr/local/sbin"
   export STORM_PATH="$HOME/projects/storm/storm-0.7.4/bin"
   export HEROKU_PATH="/usr/local/heroku/bin"
-  export PATH="$HEROKU_PATH:$HOMEBREW_PATH:$STORM_PATH:$JAVA_HOME/bin:/opt/subversion/bin:$PATH"
+  export PATH="$HOME/bin:$HEROKU_PATH:$HOMEBREW_PATH:$STORM_PATH:$JAVA_HOME/bin:$PATH"
 
 # History stuff
   shopt -s histappend
