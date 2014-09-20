@@ -1,5 +1,4 @@
 source /usr/local/etc/bash_completion.d/git-prompt.sh
-source ~/.bash/colors.sh
 
 RUBY=$'\xf0\x9f\x94\xbb'
 ARROW=$'\xe2\x9e\x9c'
@@ -15,11 +14,11 @@ __scm_ps1() {
     echo -n "$s"
 }
 
-__rbenv_ruby_version() {
-  if which rbenv > /dev/null; then
-    rbenv version | sed 's/\([^ ]*\).*/\1/'
+__ruby_version() {
+  if which ruby > /dev/null; then
+    ruby -v | cut -d' ' -f2
   fi
 }
 
 export GIT_PS1_SHOWDIRTYSTATE=true
-export PS1="$Blue\u$ResetColor_Off:$BCyan\w$Green\$(__git_ps1) $IRed$RUBY \$(__rbenv_ruby_version)$ResetColor_Off\n$Purple$ARROW  $ResetColor_Off"
+export PS1="$Blue\u$ResetColor_Off:$BCyan\w$Green\$(__git_ps1) $IRed$RUBY \$(__ruby_version)$ResetColor_Off\n$Purple$ARROW  $ResetColor_Off"
