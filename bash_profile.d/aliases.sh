@@ -70,7 +70,7 @@ alias ppath="printenv PATH | tr ':' '\n'"
 
 # Humor.
 alias shit="git"
-alias mf="cat ~/.bash/mf.txt"
+alias mf="cat ~/.bash_profile.d/mf.txt"
 alias chittychitty="sudo" # primary use-case: chittychitty !!
 rcowsay () {
   randcow=`cowsay -l | sed 1d | tr ' ' '\n' | gsort -R | head -1`
