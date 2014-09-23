@@ -40,7 +40,7 @@
   export HOMEBREW_PATH="/usr/local/bin:/usr/local/sbin"
   export STORM_PATH="$HOME/projects/storm/storm-0.7.4/bin"
   export HEROKU_PATH="/usr/local/heroku/bin"
-  export PATH="$HOME/bin:$HEROKU_PATH:$HOMEBREW_PATH:$STORM_PATH:$JAVA_HOME/bin:$PATH"
+  export PATH="./bin:$HOME/bin:$HEROKU_PATH:$HOMEBREW_PATH:$STORM_PATH:$JAVA_HOME/bin:$PATH"
 
 # History stuff
   shopt -s histappend
