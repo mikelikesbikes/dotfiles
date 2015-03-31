@@ -1,6 +1,6 @@
 # Architecture/Compilers
   export ARCHFLAGS='-arch x86_64'
-  export CC=`which gcc-4.2`
+  export CC=`which cc`
 
   # Homebrew libxslt build variables
   export LDFLAGS="$LDFLAGS -L/usr/local/opt/libxslt/lib"
@@ -20,11 +20,11 @@
   export LSCOLORS=gxfxcxdxbxegedabagacad
 
 #Ruby Enterprise Edition
-  export RUBY_HEAP_MIN_SLOTS=1000000
-  export RUBY_HEAP_SLOTS_INCREMENT=1000000
-  export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-  export RUBY_GC_MALLOC_LIMIT=1000000000
-  export RUBY_HEAP_FREE_MIN=500000
+  # export RUBY_HEAP_MIN_SLOTS=1000000
+  # export RUBY_HEAP_SLOTS_INCREMENT=1000000
+  # export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+  # export RUBY_GC_MALLOC_LIMIT=1000000000
+  # export RUBY_HEAP_FREE_MIN=500000
 
 #JRuby
   export JRUBY_OPTS="--1.9"
