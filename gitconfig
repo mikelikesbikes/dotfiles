@@ -41,3 +41,5 @@
 # Use the OSX keychain to cache your github credentials
 [credential]
   helper = osxkeychain
+[merge]
+	tool = opendiff
