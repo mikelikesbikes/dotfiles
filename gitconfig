@@ -32,14 +32,15 @@
 [core]
   excludesfile = ~/.gitignore
 [push]
-  default = upstream
-[mergetool]
-  keepBackup = false
+  default = simple
 [include]
   path = ~/.gitconfig.local
+
+[merge]
+  tool = opendiff
+[mergetool]
+  keepBackup = false
 
 # Use the OSX keychain to cache your github credentials
 [credential]
   helper = osxkeychain
-[merge]
-	tool = opendiff
