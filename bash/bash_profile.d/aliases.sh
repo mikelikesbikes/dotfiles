@@ -73,6 +73,7 @@ alias shit="git"
 alias mf="cat ~/.bash_profile.d/mf.txt"
 alias chittychitty="sudo" # primary use-case: chittychitty !!
 alias fucking="sudo"
+alias please="sudo"
 rcowsay () {
   randcow=`cowsay -l | sed 1d | tr ' ' '\n' | gsort -R | head -1`
   cowsay -f $randcow $@
