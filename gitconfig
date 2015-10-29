@@ -11,6 +11,8 @@
   pr = pull --rebase
   amend = commit --amend
   am = commit --amend -C HEAD
+  ds = diff --staged
+  dw = diff
   initialize = !git init && git commit --allow-empty -m 'initial commit'
   stache = stash
   praise = blame
