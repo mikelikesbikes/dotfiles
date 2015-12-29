@@ -144,6 +144,7 @@ export PS1="$Blue\u$ResetColor_Off:$BCyan\w$Green\$(__git_ps1) $IRed$RUBY \$(__r
   alias be="bundle exec"
   alias use-bundler="bundle exec bash -l"
   alias ppath="printenv PATH | tr ':' '\n'"
+  alias dbreset="be rake db:drop; be rake db:create && be rake db:migrate && be rake db:seed"
   add-auto-login () {
     cat .ssh/id_rsa.pub | ssh $1 'cat >> .ssh/authorized_keys'
   }
