@@ -128,8 +128,10 @@ __ruby_version() {
   fi
 }
 
-export GIT_PS1_SHOWDIRTYSTATE=true
-export PS1="$Blue\u$ResetColor_Off:$BCyan\w$Green\$(__git_ps1) $IRed$RUBY \$(__ruby_version)$ResetColor_Off\n$Purple$ARROW  $ResetColor_Off"
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWCOLORHINTS=1
+# export PS1="$Blue\u$ResetColor_Off:$BCyan\w$Green\$(__git_ps1) $IRed$RUBY \$(__ruby_version)$ResetColor_Off\n$Purple$ARROW  $ResetColor_Off"
+export PROMPT_COMMAND=$PROMPT_COMMAND'__git_ps1 "$Blue\u$ResetColor_Off:$BCyan\w$Green" " $IRed$RUBY \$(__ruby_version)$ResetColor_Off\n$Purple$ARROW  $ResetColor_Off" " $Green(%s$Green)"'
 
 # ALIASES
   alias ls="ls -G"
