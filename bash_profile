@@ -159,6 +159,7 @@ export PROMPT_COMMAND=$PROMPT_COMMAND'__git_ps1 "$Blue\u$ResetColor_Off:$BCyan\w
     randcow=`cowsay -l | sed 1d | tr ' ' '\n' | gsort -R | head -1`
     cowsay -f $randcow $@
   }
+  alias shotfun=shotgun
 
 ## COMPLETIONS
   if [ -f $(brew --prefix)/etc/bash_completion ]; then
