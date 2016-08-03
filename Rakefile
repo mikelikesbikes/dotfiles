@@ -6,6 +6,7 @@ include FileUtils
 
 HOMEDIR = File.expand_path('~')
 DOTFILES_REPO_DIR = File.join(HOMEDIR, '.dotfiles')
+CONFIG_FILES = %w(ackrc autotest bash_profile bashrc colordiffrc gemrc gitconfig gitk  htoprc irbrc rdebugrc rspec vim vimrc gvimrc)
 
 desc 'link Sublime Text 2 Preferences'
 task 'link:sublime-prefs' => ['link:dotfiles-repo'] do
@@ -24,7 +25,7 @@ end
 desc 'link the dotfiles repo to the home directory'
 task 'link:dotfiles-repo' do
   if File.symlink?(DOTFILES_REPO_DIR) && File.readlink(DOTFILES_REPO_DIR) == pwd
-    return
+    next
   end
 
   puts "linking '#{DOTFILES_REPO_DIR}' to '#{pwd}'"
@@ -33,4 +34,20 @@ end
 
 desc 'link home directory dot files'
 task 'link:home-dir' do
+  CONFIG_FILES.each do |config|
+    config_filepath = File.join(HOMEDIR, ".#{config}")
+    if File.exists?(config_filepath)
+      puts "overwrite #{config_filepath}?"
+      # rm_rf config_filepath if gets.chomp.downcase.first == "y"
+      rm_rf config_filepath if STDIN.gets.chomp.downcase.chars.first == "y"
+    end
+
+    ln_s File.join(".dotfiles", config), config_filepath    
+  end
+
+end
+
+desc 'link OSX autocorrect spellings'
+task 'link:spellings' do
+  ln_s File.join(DOTFILES_REPO_DIR, "osx-dictionary/LocalDictionary"), File.join(HOMEDIR, "Library/Spellings/LocalDictionary")
 end

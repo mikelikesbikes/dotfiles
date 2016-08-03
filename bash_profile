@@ -41,7 +41,7 @@
   shopt -s histappend
   export HISTCONTROL=ignoreboth
   export HISTSIZE=10000
-  export PROMPT_COMMAND="history -a; history -n;$PROMPT_COMMAND"
+  export PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }"history -a; history -n"
 
 ### ANSI ESCAPE COLORS ###
   ResetColor_Off='\[\e[0m\]'       # Text Reset
@@ -130,8 +130,8 @@ __ruby_version() {
 
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWCOLORHINTS=1
-# export PS1="$Blue\u$ResetColor_Off:$BCyan\w$Green\$(__git_ps1) $IRed$RUBY \$(__ruby_version)$ResetColor_Off\n$Purple$ARROW  $ResetColor_Off"
-export PROMPT_COMMAND=$PROMPT_COMMAND'__git_ps1 "$Blue\u$ResetColor_Off:$BCyan\w$Green" " $IRed$RUBY \$(__ruby_version)$ResetColor_Off\n$Purple$ARROW  $ResetColor_Off" " $Green(%s$Green)"'
+#export PS1="$Blue\u$ResetColor_Off:$BCyan\w$Green\$(__git_ps1) $IRed$RUBY \$(__ruby_version)$ResetColor_Off\n$Purple$ARROW  $ResetColor_Off"
+export PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'__git_ps1 "$Blue\u$ResetColor_Off:$BCyan\w$Green" " $IRed$RUBY \$(__ruby_version)$ResetColor_Off\n$Purple$ARROW  $ResetColor_Off" " $Green(%s$Green)"'
 
 # ALIASES
   alias ls="ls -G"
