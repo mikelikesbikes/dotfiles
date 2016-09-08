@@ -120,6 +120,7 @@ source /usr/local/etc/bash_completion.d/git-prompt.sh
 
 RUBY=$'\xf0\x9f\x94\xbb'
 ARROW=$'\xe2\x9e\x9c'
+CLOCK=$'\xF0\x9F\x95\x93'
 
 __ruby_version() {
   if which ruby > /dev/null; then
@@ -130,7 +131,8 @@ __ruby_version() {
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWCOLORHINTS=1
 #export PS1="$Blue\u$ResetColor_Off:$BCyan\w$Green\$(__git_ps1) $IRed$RUBY \$(__ruby_version)$ResetColor_Off\n$Purple$ARROW  $ResetColor_Off"
-export PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'__git_ps1 "$Blue\u$ResetColor_Off:$BCyan\w$Green" " $IRed$RUBY \$(__ruby_version)$ResetColor_Off\n$Purple$ARROW  $ResetColor_Off" " $Green(%s$Green)"'
+export PS1_INSTRUMENTS="$Black$CLOCK \t $IRed$RUBY \$(__ruby_version)"
+export PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'__git_ps1 "\n$Blue\u$ResetColor_Off:$BCyan\w$Green" " $PS1_INSTRUMENTS$ResetColor_Off\n$Purple$ARROW  $ResetColor_Off" " $Green(%s$Green)"'
 
 # ALIASES
   alias ls="ls -G"
