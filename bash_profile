@@ -33,15 +33,14 @@
 
 # Path stuff
   export HOMEBREW_PATH="/usr/local/bin:/usr/local/sbin"
-  export STORM_PATH="$HOME/projects/storm/storm-0.7.4/bin"
-  export HEROKU_PATH="/usr/local/heroku/bin"
-  export PATH="./bin:$HOME/bin:$HEROKU_PATH:$HOMEBREW_PATH:$STORM_PATH:$JAVA_HOME/bin:$PATH"
+  export PATH="./bin:$HOME/bin:$HOMEBREW_PATH:$JAVA_HOME/bin:$PATH"
 
 # History stuff
   shopt -s histappend
   export HISTCONTROL=ignoreboth
-  export HISTSIZE=10000
-  export PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }"history -a; history -n"
+  export HISTSIZE=100000
+  export HISTFILESIZE=100000
+  # export PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }"history -a; history -c; history -r"
 
 ### ANSI ESCAPE COLORS ###
   ResetColor_Off='\[\e[0m\]'       # Text Reset
