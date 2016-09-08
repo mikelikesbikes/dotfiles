@@ -151,6 +151,13 @@ export PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'__git_ps1 "\n$Blue\u$
   add-auto-login () {
     cat .ssh/id_rsa.pub | ssh $1 'cat >> .ssh/authorized_keys'
   }
+  alias gst="git status"
+  alias gco="git checkout -p"
+  alias gap="git add -p"
+  alias gci="git commit -v"
+  alias gpl="git pull"
+  alias gpr="git pull --rebase"
+  alias gph="git push"
 
 # Humor.
   alias chittychitty="sudo" # primary use-case: chittychitty !!
