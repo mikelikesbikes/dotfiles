@@ -180,3 +180,9 @@ test -r "$HOME/.bashrc" && source "$HOME/.bashrc"
 
 # This loads rbenv shims and completion
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# load heroku specific bash stuff
+if [ -r "$HOME/.bash_profile-heroku.local" ]; then
+  echo "loading heroku bash_profile"
+  source "$HOME/.bash_profile-heroku.local"
+fi
