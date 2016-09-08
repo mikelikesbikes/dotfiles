@@ -1,47 +1,56 @@
+
 augroup bundles
   autocmd!
 
+  set nocompatible
   filetype off
 
-  set rtp+=~/.vim/bundle/vundle/
-  call vundle#rc()
+  set rtp+=~/.vim/bundle/Vundle.vim
+  call vundle#begin()
 
   " Let Vundle manage Vundle
-    Bundle 'gmarik/vundle'
+    Plugin 'gmarik/vundle'
 
   " Ruby/Rails
-    Bundle 'tpope/vim-rails'
+    Plugin 'tpope/vim-rails'
 
   " Clojure
-    Bundle 'VimClojure'
+    Plugin 'VimClojure'
 
   " Scala
-    Bundle 'derekwyatt/vim-scala'
+    Plugin 'derekwyatt/vim-scala'
 
   " Golang
-    Bundle 'jnwhiteh/vim-golang'
+    Plugin 'fatih/vim-go'
 
   " Markdown/Textile/etc
-    Bundle 'timcharper/textile.vim'
-    Bundle 'tpope/vim-markdown'
+    Plugin 'timcharper/textile.vim'
+    Plugin 'tpope/vim-markdown'
 
   " HTML/CSS/Javascript
-    Bundle 'vim-coffee-script'
+    Plugin 'vim-coffee-script'
 
 
   " Utilities
-    Bundle 'ack.vim'
+    Plugin 'ack.vim'
+    let g:ackprg = 'ag --nogroup --nocolor --column'
 
-    Bundle 'tpope/vim-fugitive'
-
-    Bundle 'kien/ctrlp.vim'
-    noremap <C-t> :CtrlPMixed<CR>
+    Plugin 'kien/ctrlp.vim'
 
     " Bundle 'Command-T'
     " noremap <C-t> :CommandT<CR>
     " let g:CommandTMaxFiles=80085
 
-    " Bundle 'FuzzyFinder'
-    " noremap <C-t> :FufCoverageFile<CR>
+    Plugin 'vim-airline/vim-airline'
+    Plugin 'rking/ag.vim'
+    Plugin 'tpope/vim-fugitive'
+    Plugin 'tpope/vim-surround'
+
+    " from: https://github.com/Shougo/neocomplete.vim
+    Plugin 'Shougo/neocomplete.vim'
+    let g:acp_enableAtStartup = 0
+    let g:neocomplete#enable_at_startup = 1
+    let g:neocomplete#enable_smart_case = 1
+
   filetype plugin indent on
 augroup END
