@@ -175,11 +175,15 @@ export PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'__git_ps1 "\n$Blue\u$
   fi
 
 test -r "$HOME/.bash_profile.local" && source "$HOME/.bash_profile.local"
-
 test -r "$HOME/.bashrc" && source "$HOME/.bashrc"
 
 # This loads rbenv shims and completion
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH"
+#if which goenv > /dev/null; then eval "$(goenv init -)"; fi
 
 # load heroku specific bash stuff
 if [ -r "$HOME/.bash_profile-heroku.local" ]; then
