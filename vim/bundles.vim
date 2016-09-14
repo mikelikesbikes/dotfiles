@@ -9,7 +9,7 @@ augroup bundles
   call vundle#begin()
 
   " Let Vundle manage Vundle
-    Plugin 'gmarik/vundle'
+    Plugin 'VundleVim/Vundle.vim'
 
   " Ruby/Rails
     Plugin 'tpope/vim-rails'
@@ -32,17 +32,13 @@ augroup bundles
 
 
   " Utilities
-    Plugin 'ack.vim'
-    let g:ackprg = 'ag --nogroup --nocolor --column'
+    Plugin 'mileszs/ack.vim'
+    if executable('ag')
+      let g:ackprg = 'ag --vimgrep'
+    endif
 
     Plugin 'kien/ctrlp.vim'
-
-    " Bundle 'Command-T'
-    " noremap <C-t> :CommandT<CR>
-    " let g:CommandTMaxFiles=80085
-
     Plugin 'vim-airline/vim-airline'
-    Plugin 'rking/ag.vim'
     Plugin 'tpope/vim-fugitive'
     Plugin 'tpope/vim-surround'
 
@@ -52,5 +48,6 @@ augroup bundles
     let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#enable_smart_case = 1
 
+  call vundle#end()
   filetype plugin indent on
 augroup END
