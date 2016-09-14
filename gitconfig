@@ -18,6 +18,7 @@
   praise = blame
   pom = push origin master
   lg = log -p
+  prs = log --merges --grep 'Merge pull request' --date=local
   lol = log --graph --decorate --oneline
   lola = log --graph --decorate --oneline --all
   shas = log --pretty=format:"%H"
