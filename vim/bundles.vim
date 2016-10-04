@@ -39,8 +39,21 @@ augroup bundles
 
     Plugin 'kien/ctrlp.vim'
     Plugin 'vim-airline/vim-airline'
+
     Plugin 'tpope/vim-fugitive'
+    map <Leader>g :Gbrowse
+
     Plugin 'tpope/vim-surround'
+    Plugin 'tpope/vim-repeat'
+    Plugin 'tpope/vim-commentary'
+
+    Plugin 'janko-m/vim-test'
+    let test#strategy = "iterm"
+    nmap <silent> <leader>t :TestNearest<CR>
+    nmap <silent> <leader>T :TestFile<CR>
+    nmap <silent> <leader>a :TestSuite<CR>
+    nmap <silent> <leader>l :TestLast<CR>
+    nmap <silent> <leader>g :TestVisit<CR>
 
     " from: https://github.com/Shougo/neocomplete.vim
     Plugin 'Shougo/neocomplete.vim'

@@ -58,7 +58,6 @@ syntax on
   set smartcase
 
 " Misc
-  let mapleader = ','
   set history=1000
   set autoread
   set nohidden
