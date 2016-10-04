@@ -13,11 +13,12 @@
   test -d "$LIBXML2_ROOT/include" && export LDFLAGS="$LDFLAGS -L$LIBXML2_ROOT/include"
 
 # Editor
-  export EDITOR="/usr/bin/vim"
+  export EDITOR=`which vim`
   export BUNDLER_EDITOR="mvim"
 
 # Miscellaneous
-  export DOTFILES=$HOME/dotfiles
+  export DOTFILES=$HOME/.dotfiles
+  export MYVIMRC=$HOME/.vimrc
   export CDPATH=.:$HOME:$HOME/projects
   export LSCOLORS=gxfxcxdxbxegedabagacad
 
