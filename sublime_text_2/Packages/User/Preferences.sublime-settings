@@ -1,20 +1,4 @@
 {
-	"auto_complete_commit_on_tab": true,
 	"color_scheme": "Packages/Color Scheme - Default/Solarized (Light).tmTheme",
-	"file_exclude_patterns":
-	[
-		".tags",
-		"tags",
-		".tags_sorted_by_file"
-	],
-	"find_selected_text": true,
-	"font_size": 23.0,
-	"hot_exit": false,
-	"ignored_packages":
-	[
-		"Vintage"
-	],
-	"remember_open_files": false,
-	"tab_size": 2,
-	"translate_tabs_to_spaces": true
+	"font_size": 14.0
 }

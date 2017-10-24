@@ -7,6 +7,8 @@ augroup bundles
 
   set rtp+=~/.vim/bundle/Vundle.vim
   call vundle#begin()
+  " Solarized
+    Plugin 'altercation/vim-colors-solarized'
 
   " Let Vundle manage Vundle
     Plugin 'VundleVim/Vundle.vim'
@@ -41,19 +43,21 @@ augroup bundles
     Plugin 'vim-airline/vim-airline'
 
     Plugin 'tpope/vim-fugitive'
-    map <Leader>g :Gbrowse
+    Plugin 'tpope/vim-rhubarb'
+    map <Leader>g :Gbrowse!<CR>
 
     Plugin 'tpope/vim-surround'
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-commentary'
+    Plugin 'tpope/vim-projectionist'
 
     Plugin 'janko-m/vim-test'
     let test#strategy = "iterm"
     nmap <silent> <leader>t :TestNearest<CR>
     nmap <silent> <leader>T :TestFile<CR>
-    nmap <silent> <leader>a :TestSuite<CR>
-    nmap <silent> <leader>l :TestLast<CR>
-    nmap <silent> <leader>g :TestVisit<CR>
+    " nmap <silent> <leader>a :TestSuite<CR>
+    " nmap <silent> <leader>l :TestLast<CR>
+    " nmap <silent> <leader>v :TestVisit<CR>
 
     " from: https://github.com/Shougo/neocomplete.vim
     Plugin 'Shougo/neocomplete.vim'
@@ -64,3 +68,6 @@ augroup bundles
   call vundle#end()
   filetype plugin indent on
 augroup END
+
+colorscheme solarized
+set background=light

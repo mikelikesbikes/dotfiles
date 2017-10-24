@@ -38,10 +38,11 @@
 
 # History stuff
   shopt -s histappend
-  export HISTCONTROL=ignoreboth
+  export HISTCONTROL=ignoredups:erasedups
   export HISTSIZE=100000
   export HISTFILESIZE=100000
-  # export PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }"history -a; history -c; history -r"
+  # After each command, append to the history file and reread it
+  export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }history -a; history -c; history -r"
 
 ### ANSI ESCAPE COLORS ###
   ResetColor_Off='\[\e[0m\]'       # Text Reset
@@ -191,3 +192,11 @@ if [ -r "$HOME/.bash_profile-heroku.local" ]; then
   echo "loading heroku bash_profile"
   source "$HOME/.bash_profile-heroku.local"
 fi
+
+test -e "$HOME/.iterm2_shell_integration.bash" && source "$HOME/.iterm2_shell_integration.bash"
+
+# load fzf settings https://github.com/junegunn/fzf#using-homebrew-or-linuxbrew
+test -f "$HOME/.fzf.bash" && source "$HOME/.fzf.bash"
+eval "$(goenv init -)"
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"

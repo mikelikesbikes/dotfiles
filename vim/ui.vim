@@ -7,14 +7,12 @@ syntax on
   set showmatch                 " Briefly jump to a paren once it's balanced
   set linespace=2
   set laststatus=2
+  set guifont=Monaco:h13
+
+  set colorcolumn=81
+  highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 
 " Colorscheme
-  if has("gui_running")
-    colorscheme solarized
-    set background=light
-  else
-    set background=light
-  end
 
 " Tabs/Whitespace
   set tabstop=2
@@ -23,16 +21,20 @@ syntax on
   set smarttab
   set expandtab
   set nowrap
-  set list
-  set listchars=tab:▸\ ,eol:¬
+"  set list
+"  set listchars=tab:▸\ ,eol:¬
+"  set listchars=eol:¬
   set backspace=indent,eol,start " allow backspacing over everything in insert mode
-  " Highlight end of line whitespace
-    let hiExtraWhiteSpace = "hi ExtraWhitespace ctermbg=red guibg=red"
-    exec hiExtraWhiteSpace
-    au ColorScheme * exec hiExtraWhiteSpace
-    au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-    au BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
+" Highlight end of line whitespace
+  let hiExtraWhiteSpace = "hi ExtraWhitespace ctermbg=red guibg=red"
+  exec hiExtraWhiteSpace
+  au ColorScheme * exec hiExtraWhiteSpace
+  au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+  au BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
 
+" Make those debugger statements painfully obvious
+  au BufEnter *.rb syn match error contained "\<binding.pry\>"
+  au BufEnter *.rb syn match error contained "\<debugger\>"
 
 " Directories for swp files
   " persistent undos
@@ -62,3 +64,4 @@ syntax on
   set autoread
   set nohidden
   set complete=.,b,u,]
+  set wildmenu

@@ -8,6 +8,8 @@
   ci = commit -v
   br = branch
   co = checkout
+  # fzf enabled co; shows git log to right
+  # co = !git for-each-ref --count=10 --sort=-committerdate --format='%(refname:short) (%(committerdate:relative))' refs/heads | fzf --reverse --nth=1 --preview 'git log --patch --color {1}...{1}~5' --bind 'enter:execute(git checkout {+1})+accept'
   pr = pull --rebase
   amend = commit --amend
   am = commit --amend -C HEAD
@@ -35,7 +37,7 @@
 [core]
   excludesfile = ~/.gitignore
 [push]
-  default = simple
+	default = current
 [include]
   path = ~/.gitconfig.local
 
@@ -47,3 +49,5 @@
 # Use the OSX keychain to cache your github credentials
 [credential]
   helper = osxkeychain
+[rerere]
+	enabled = true
