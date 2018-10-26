@@ -18,6 +18,7 @@
   initialize = !git init && git commit --allow-empty -m 'initial commit'
   stache = stash
   praise = blame
+  whodoneit = blame
   pom = push origin master
   lg = log -p
   prs = log --merges --grep 'Merge pull request' --date=local
@@ -36,8 +37,6 @@
 
 [core]
   excludesfile = ~/.gitignore
-[push]
-	default = current
 [include]
   path = ~/.gitconfig.local
 
@@ -45,9 +44,15 @@
   tool = opendiff
 [mergetool]
   keepBackup = false
+[pager]
+#	log = diff-highlight | less
+#	show = diff-highlight | less
+#	diff = diff-highlight | less
 
 # Use the OSX keychain to cache your github credentials
 [credential]
   helper = osxkeychain
 [rerere]
 	enabled = true
+[push]
+	default = current
