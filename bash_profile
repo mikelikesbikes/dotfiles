@@ -162,6 +162,7 @@ export PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'__git_ps1 "\n$Blue\u$
   alias gph="git push"
 
 # Humor.
+  alias arbys="ruby"
   alias chittychitty="sudo" # primary use-case: chittychitty !!
   alias fucking="sudo"
   alias please="sudo"
@@ -184,8 +185,9 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 
 export GOPATH="$HOME/go"
-export PATH="$GOPATH/bin:$PATH"
-#if which goenv > /dev/null; then eval "$(goenv init -)"; fi
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOPATH/bin:$GOENV_ROOT/bin:$PATH"
+if which goenv > /dev/null; then eval "$(goenv init -)"; fi
 
 # load heroku specific bash stuff
 if [ -r "$HOME/.bash_profile-heroku.local" ]; then
@@ -197,6 +199,3 @@ test -e "$HOME/.iterm2_shell_integration.bash" && source "$HOME/.iterm2_shell_in
 
 # load fzf settings https://github.com/junegunn/fzf#using-homebrew-or-linuxbrew
 test -f "$HOME/.fzf.bash" && source "$HOME/.fzf.bash"
-eval "$(goenv init -)"
-export GOENV_ROOT="$HOME/.goenv"
-export PATH="$GOENV_ROOT/bin:$PATH"

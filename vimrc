@@ -28,6 +28,9 @@ map <Leader>h :noh<CR>
 " <Leader>f sets the text width to 80 and then reformats the current document
 map <Leader>f :setl tw=80<CR>gggqG<CR>
 
+" <Leader>bd destroys all open buffers
+map <Leader>bd :bufdo bd<CR>
+
 " Key sequence mappings
 " execute current line as shell command, and open output in new window
 map <Leader>x :silent . w ! sh > ~/.vim_cmd.out<CR>:new ~/.vim_cmd.out<CR>
