@@ -42,7 +42,8 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 " insert pry or debugger
-map <Leader>p :normal Orequire 'pry'; binding.pry<esc>
+map <Leader>b :normal Orequire 'pry'; binding.pry<esc>
+map <Leader>p :normal Oputs __method__<esc>
 map <Leader>d :normal Orequire 'byebug'; debugger<esc>
 
 " suppress netrw history file from being saved

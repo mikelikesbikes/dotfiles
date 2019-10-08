@@ -1,6 +1,6 @@
 # Architecture/Compilers
-  export ARCHFLAGS='-arch x86_64'
-  test `which gcc-42` && export CC=`which gcc-42`
+  #export ARCHFLAGS='-arch x86_64'
+  #test `which gcc-42` && export CC=`which gcc-42`
 
 # Homebrew libxslt build variables
   LIBXSLT_ROOT="/usr/local/opt/libxslt"
@@ -188,12 +188,6 @@ export GOPATH="$HOME/go"
 export GOENV_ROOT="$HOME/.goenv"
 export PATH="$GOPATH/bin:$GOENV_ROOT/bin:$PATH"
 if which goenv > /dev/null; then eval "$(goenv init -)"; fi
-
-# load heroku specific bash stuff
-if [ -r "$HOME/.bash_profile-heroku.local" ]; then
-  echo "loading heroku bash_profile"
-  source "$HOME/.bash_profile-heroku.local"
-fi
 
 test -e "$HOME/.iterm2_shell_integration.bash" && source "$HOME/.iterm2_shell_integration.bash"
 

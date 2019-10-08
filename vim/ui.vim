@@ -14,6 +14,10 @@ syntax on
 
 " Colorscheme
 
+" Textwidth
+"  set textwidth=80
+  au BufRead,BufNewFile *.md setlocal textwidth=80
+
 " Tabs/Whitespace
   set tabstop=2
   set shiftwidth=2
