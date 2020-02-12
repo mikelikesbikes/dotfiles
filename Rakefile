@@ -49,5 +49,5 @@ end
 
 desc 'link OSX autocorrect spellings'
 task 'link:spellings' do
-  ln_s File.join(DOTFILES_REPO_DIR, "osx-dictionary/LocalDictionary"), File.join(HOMEDIR, "Library/Spellings/LocalDictionary")
+  ln_s File.join(DOTFILES_REPO_DIR, "osx-dictionary/LocalDictionary"), File.join(HOMEDIR, "Library/Spelling/LocalDictionary")
 end
