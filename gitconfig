@@ -16,6 +16,7 @@
   ds = diff --staged
   dw = diff
   initialize = !git init && git commit --allow-empty -m 'initial commit'
+  cleanup = !git fetch origin && git branch --merged origin/master | grep -v master | xargs -n 1 git branch -d
   stache = stash
   praise = blame
   whodoneit = blame
