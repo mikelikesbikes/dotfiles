@@ -3,14 +3,18 @@
   #test `which gcc-42` && export CC=`which gcc-42`
 
 # Homebrew libxslt build variables
-  LIBXSLT_ROOT="/usr/local/opt/libxslt"
-  test -d "$LIBXSLT_ROOT/lib" && export LDFLAGS="$LDFLAGS -L$LIBXSLT_ROOT/lib"
-  test -d "$LIBXSLT_ROOT/include" && export LDFLAGS="$LDFLAGS -L$LIBXSLT_ROOT/include"
+#  LIBXSLT_ROOT="/usr/local/opt/libxslt"
+#  test -d "$LIBXSLT_ROOT/lib" && export LDFLAGS="$LDFLAGS -L$LIBXSLT_ROOT/lib"
+#  test -d "$LIBXSLT_ROOT/include" && export LDFLAGS="$LDFLAGS -L$LIBXSLT_ROOT/include"
 
 # Homebrew libxml build variables
-  LIBXML2_ROOT="/usr/local/opt/libxml2"
-  test -d "$LIBXML2_ROOT/lib" && export LDFLAGS="$LDFLAGS -L$LIBXML2_ROOT/lib"
-  test -d "$LIBXML2_ROOT/include" && export LDFLAGS="$LDFLAGS -L$LIBXML2_ROOT/include"
+#  LIBXML2_ROOT="/usr/local/opt/libxml2"
+#  test -d "$LIBXML2_ROOT/lib" && export LDFLAGS="$LDFLAGS -L$LIBXML2_ROOT/lib"
+#  test -d "$LIBXML2_ROOT/include" && export LDFLAGS="$LDFLAGS -L$LIBXML2_ROOT/include"
+
+# Homebrew
+  # this speeds up $(brew --prefix)
+  export HOMEBREW_PREFIX="/usr/local"
 
 # Editor
   export EDITOR=`which vim`
@@ -19,6 +23,7 @@
 # Miscellaneous
   export DOTFILES=$HOME/.dotfiles
   export MYVIMRC=$HOME/.vimrc
+  # `brew install bash-completion` to get this to autocomplete
   export CDPATH=.:$HOME:$HOME/projects
   export LSCOLORS=gxfxcxdxbxegedabagacad
 
@@ -26,15 +31,11 @@
   export JRUBY_OPTS="--1.9"
 
 # Java stuff
-  export JAVA_HOME=`/usr/libexec/java_home`
+  #export JAVA_HOME=`/usr/libexec/java_home`
   #export M2_HOME=/usr/local/apache-maven/apache-maven-2.2.1
   #export MAVEN_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xms256m -Xmx512m -XX:MaxPermSize=128m"
   #export MAVEN_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=3998,suspend=n,server=y -Xms256m -Xmx512m -XX:MaxPermSize=256m"
   #export M2=$M2_HOME/bin
-
-# Path stuff
-  export HOMEBREW_PATH="/usr/local/bin:/usr/local/sbin"
-  export PATH="./bin:$HOME/bin:$HOMEBREW_PATH:$JAVA_HOME/bin:$PATH"
 
 # History stuff
   shopt -s histappend
@@ -177,9 +178,6 @@ export PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'__git_ps1 "\n$Blue\u$
     . $(brew --prefix)/etc/bash_completion
   fi
 
-test -r "$HOME/.bash_profile.local" && source "$HOME/.bash_profile.local"
-test -r "$HOME/.bashrc" && source "$HOME/.bashrc"
-
 # This loads rbenv shims and completion
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
@@ -193,3 +191,9 @@ test -e "$HOME/.iterm2_shell_integration.bash" && source "$HOME/.iterm2_shell_in
 
 # load fzf settings https://github.com/junegunn/fzf#using-homebrew-or-linuxbrew
 test -f "$HOME/.fzf.bash" && source "$HOME/.fzf.bash"
+
+# Path stuff
+export PATH="./bin:$HOME/bin:$PATH"
+
+# load other profiles
+test -r "$HOME/.bash_profile.local" && source "$HOME/.bash_profile.local"
