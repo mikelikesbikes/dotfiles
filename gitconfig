@@ -6,7 +6,7 @@
   st = status
   stb = status -sb
   ci = commit -v
-  br = branch
+  br = branch --sort=-committerdate
   co = checkout
   # fzf enabled co; shows git log to right
   # co = !git for-each-ref --count=10 --sort=-committerdate --format='%(refname:short) (%(committerdate:relative))' refs/heads | fzf --reverse --nth=1 --preview 'git log --patch --color {1}...{1}~5' --bind 'enter:execute(git checkout {+1})+accept'
@@ -42,9 +42,17 @@
   path = ~/.gitconfig.local
 
 [merge]
-  tool = opendiff
+  tool = vscode
 [mergetool]
   keepBackup = false
+[mergetool "vscode"]
+  cmd = code --wait --new-window $MERGED
+
+# [diff]
+#   tool = vscode
+# [difftool "vscode"]
+#   cmd = code --wait --diff --new-window $LOCAL $REMOTE
+
 [pager]
 #	log = diff-highlight | less
 #	show = diff-highlight | less
@@ -57,3 +65,7 @@
 	enabled = true
 [push]
 	default = current
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[init]
+	defaultBranch = main

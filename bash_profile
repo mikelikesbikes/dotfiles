@@ -172,10 +172,17 @@ export PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'__git_ps1 "\n$Blue\u$
     cowsay -f $randcow $@
   }
   alias shotfun=shotgun
+  aocdl () {
+    curl -b session=$(cat ${HOME}/.aocrc) https://adventofcode.com/2022/day/$1/input 2>/dev/null > input.txt
+  }
+  aocmk () {
+    cp -r template day-$1
+  }
+  alias cdaoc="cd $HOME/projects/mikelikesbikes/advent-of-code-2021"
 
 ## COMPLETIONS
-  if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
+  if [ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]; then
+    . "$(brew --prefix)/etc/profile.d/bash_completion.sh"
   fi
 
 # This loads rbenv shims and completion
@@ -193,7 +200,7 @@ test -e "$HOME/.iterm2_shell_integration.bash" && source "$HOME/.iterm2_shell_in
 test -f "$HOME/.fzf.bash" && source "$HOME/.fzf.bash"
 
 # Path stuff
-export PATH="./bin:$HOME/bin:$PATH"
+export PATH="./bin:$HOME/bin:/Applications/MacVim.app/Contents/bin:$PATH"
 
 # load other profiles
 test -r "$HOME/.bash_profile.local" && source "$HOME/.bash_profile.local"

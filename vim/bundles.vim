@@ -23,7 +23,7 @@ augroup bundles
     Plugin 'derekwyatt/vim-scala'
 
   " Golang
-    Plugin 'fatih/vim-go'
+  "  Plugin 'fatih/vim-go'
 
   " Markdown/Textile/etc
     Plugin 'timcharper/textile.vim'
@@ -44,7 +44,7 @@ augroup bundles
 
     Plugin 'tpope/vim-fugitive'
     Plugin 'tpope/vim-rhubarb'
-    map <Leader>g :Gbrowse!<CR>
+    map <Leader>g :GBrowse!<CR>
 
     Plugin 'tpope/vim-surround'
     Plugin 'tpope/vim-repeat'
@@ -68,6 +68,14 @@ augroup bundles
   call vundle#end()
   filetype plugin indent on
 augroup END
+
+syntax enable
+
+if has('gui_running')
+else
+  set t_Co=256
+  let g:solarized_termcolors=256
+endif
 
 colorscheme solarized
 set background=light
